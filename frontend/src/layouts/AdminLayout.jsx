@@ -42,6 +42,9 @@ export default function AdminLayout() {
             <NavLink to="/admin/doctors" className={navLinkClass}>
               Doctors
             </NavLink>
+            <NavLink to="/admin/appointments" className={navLinkClass}>
+              Appointments
+            </NavLink>
           </nav>
         </aside>
         <main className="flex-1 p-6">
