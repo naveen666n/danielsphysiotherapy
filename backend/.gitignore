@@ -2,5 +2,8 @@ node_modules/
 .env
 src/uploads/*
 !src/uploads/.gitkeep
+!src/uploads/doctors/
+src/uploads/doctors/*
+!src/uploads/doctors/.gitkeep
 *.log
 .DS_Store

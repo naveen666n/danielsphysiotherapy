@@ -1,3 +1,4 @@
+import multer from 'multer';
 import AppError from '../utils/AppError.js';
 
 export function errorHandler(err, req, res, next) {
@@ -6,6 +7,14 @@ export function errorHandler(err, req, res, next) {
       success: false,
       message: err.message,
       errors: err.errors,
+    });
+  }
+
+  if (err instanceof multer.MulterError) {
+    return res.status(400).json({
+      success: false,
+      message: err.message,
+      errors: null,
     });
   }
 
