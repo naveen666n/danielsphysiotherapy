@@ -8,5 +8,8 @@ src/uploads/doctors/*
 !src/uploads/services/
 src/uploads/services/*
 !src/uploads/services/.gitkeep
+!src/uploads/testimonials/
+src/uploads/testimonials/*
+!src/uploads/testimonials/.gitkeep
 *.log
 .DS_Store
