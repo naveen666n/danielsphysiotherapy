@@ -4,7 +4,17 @@ import env from '../config/env.js';
 import * as authService from '../services/authService.js';
 
 const COOKIE_NAME = 'token';
-const COOKIE_MAX_AGE_MS = 8 * 60 * 60 * 1000;
+
+function parseExpiryToMs(value, fallbackMs) {
+  const match = /^(\d+)(s|m|h|d)?$/.exec(String(value).trim());
+  if (!match) return fallbackMs;
+  const amount = Number(match[1]);
+  const unit = match[2] || 's';
+  const unitMs = { s: 1000, m: 60 * 1000, h: 60 * 60 * 1000, d: 24 * 60 * 60 * 1000 }[unit];
+  return amount * unitMs;
+}
+
+const COOKIE_MAX_AGE_MS = parseExpiryToMs(env.JWT_EXPIRES_IN, 8 * 60 * 60 * 1000);
 
 function cookieOptions() {
   return {

@@ -6,8 +6,12 @@ export default function AdminLayout() {
   const { user, logout } = useAuth();
 
   async function handleLogout() {
-    await logout();
-    toast.success('Logged out successfully');
+    try {
+      await logout();
+      toast.success('Logged out successfully');
+    } catch (err) {
+      toast.error(err.message || 'Logout failed. Please try again.');
+    }
   }
 
   return (
