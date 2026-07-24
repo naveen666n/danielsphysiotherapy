@@ -62,14 +62,14 @@ export async function createDoctor(data, file) {
 export async function updateDoctor(id, data, file) {
   const existing = await getDoctor(id);
 
-  let photoUrl = existing.photo_url;
-  if (file) {
-    await deletePhotoFile(existing.photo_url);
-    photoUrl = buildPhotoUrl(file);
-  }
-
+  const photoUrl = file ? buildPhotoUrl(file) : existing.photo_url;
   const doctor = toRow(data, photoUrl);
   await doctorRepository.update(id, doctor);
+
+  if (file) {
+    await deletePhotoFile(existing.photo_url);
+  }
+
   return getDoctor(id);
 }
 
