@@ -5,6 +5,10 @@ export function useDoctors() {
   return useQuery({ queryKey: ['doctors'], queryFn: doctorService.listDoctors });
 }
 
+export function usePublicDoctors() {
+  return useQuery({ queryKey: ['doctors', 'public'], queryFn: doctorService.listPublicDoctors });
+}
+
 export function useDoctor(id) {
   return useQuery({
     queryKey: ['doctors', id],

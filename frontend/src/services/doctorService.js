@@ -5,6 +5,11 @@ export async function listDoctors() {
   return data.data;
 }
 
+export async function listPublicDoctors() {
+  const { data } = await api.get('/doctors/public');
+  return data.data;
+}
+
 export async function getDoctor(id) {
   const { data } = await api.get(`/doctors/${id}`);
   return data.data;
