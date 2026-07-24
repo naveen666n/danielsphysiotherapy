@@ -7,6 +7,8 @@ import AdminHome from './pages/admin/AdminHome.jsx';
 import DoctorList from './pages/admin/doctors/DoctorList.jsx';
 import DoctorForm from './pages/admin/doctors/DoctorForm.jsx';
 import AppointmentList from './pages/admin/appointments/AppointmentList.jsx';
+import StaffList from './pages/admin/staff/StaffList.jsx';
+import StaffForm from './pages/admin/staff/StaffForm.jsx';
 import ProtectedRoute from './routes/ProtectedRoute.jsx';
 
 export default function App() {
@@ -23,6 +25,9 @@ export default function App() {
           <Route element={<ProtectedRoute roles={['admin']} />}>
             <Route path="doctors/new" element={<DoctorForm />} />
             <Route path="doctors/:id/edit" element={<DoctorForm />} />
+            <Route path="staff" element={<StaffList />} />
+            <Route path="staff/new" element={<StaffForm />} />
+            <Route path="staff/:id/edit" element={<StaffForm />} />
           </Route>
         </Route>
       </Route>
