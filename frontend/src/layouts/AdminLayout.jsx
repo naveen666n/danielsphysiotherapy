@@ -1,6 +1,11 @@
-import { Outlet } from 'react-router-dom';
+import { NavLink, Outlet } from 'react-router-dom';
 import toast from 'react-hot-toast';
 import { useAuth } from '../contexts/AuthContext.jsx';
+
+const navLinkClass = ({ isActive }) =>
+  `block rounded px-3 py-2 text-sm font-medium ${
+    isActive ? 'bg-blue-50 text-blue-700' : 'text-slate-600 hover:bg-slate-50'
+  }`;
 
 export default function AdminLayout() {
   const { user, logout } = useAuth();
@@ -29,8 +34,15 @@ export default function AdminLayout() {
         </div>
       </header>
       <div className="flex">
-        <aside className="w-56 border-r border-slate-200 bg-white p-4 text-slate-500">
-          Navigation coming soon
+        <aside className="w-56 border-r border-slate-200 bg-white p-4">
+          <nav className="space-y-1">
+            <NavLink to="/admin" end className={navLinkClass}>
+              Dashboard
+            </NavLink>
+            <NavLink to="/admin/doctors" className={navLinkClass}>
+              Doctors
+            </NavLink>
+          </nav>
         </aside>
         <main className="flex-1 p-6">
           <Outlet />
