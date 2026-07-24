@@ -15,3 +15,11 @@ export const loginLimiter = rateLimit({
   legacyHeaders: false,
   message: { success: false, message: 'Too many login attempts. Please wait a minute and try again.', errors: null },
 });
+
+export const bookingLimiter = rateLimit({
+  windowMs: 15 * 60 * 1000,
+  max: 5,
+  standardHeaders: true,
+  legacyHeaders: false,
+  message: { success: false, message: 'Too many booking attempts. Please wait and try again.', errors: null },
+});
