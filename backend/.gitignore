@@ -5,5 +5,8 @@ src/uploads/*
 !src/uploads/doctors/
 src/uploads/doctors/*
 !src/uploads/doctors/.gitkeep
+!src/uploads/services/
+src/uploads/services/*
+!src/uploads/services/.gitkeep
 *.log
 .DS_Store
