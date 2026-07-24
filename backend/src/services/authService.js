@@ -4,6 +4,8 @@ import env from '../config/env.js';
 import AppError from '../utils/AppError.js';
 import { findUserByUsername, findUserById } from '../repositories/userRepository.js';
 
+const DUMMY_PASSWORD_HASH = '$2b$10$CwTycUXWue0Thq9StjUM0uJ8n1M0.zLK.hbmm6Uw5vwiKPY5Ha9OK';
+
 function toPublicProfile(user) {
   return {
     id: user.id,
@@ -17,12 +19,9 @@ function toPublicProfile(user) {
 
 export async function login({ username, password }) {
   const user = await findUserByUsername(username);
-  if (!user || !user.active) {
-    throw new AppError('Invalid username or password.', 401);
-  }
+  const passwordMatches = await bcrypt.compare(password, user?.password_hash ?? DUMMY_PASSWORD_HASH);
 
-  const passwordMatches = await bcrypt.compare(password, user.password_hash);
-  if (!passwordMatches) {
+  if (!user || !user.active || !passwordMatches) {
     throw new AppError('Invalid username or password.', 401);
   }
 
