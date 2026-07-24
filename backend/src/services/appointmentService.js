@@ -30,13 +30,28 @@ export async function getAppointment(id) {
 
 export async function createPublicAppointment(data) {
   const appointment = toCreateRow(data);
-  const id = await appointmentRepository.create(appointment);
+  let id;
+  try {
+    id = await appointmentRepository.create(appointment);
+  } catch (err) {
+    if (err.code === 'ER_NO_REFERENCED_ROW_2' || err.code === 'ER_NO_REFERENCED_ROW') {
+      throw new AppError('Selected doctor does not exist.', 400);
+    }
+    throw err;
+  }
   return getAppointment(id);
 }
 
 export async function updateAppointment(id, data) {
   await getAppointment(id);
-  await appointmentRepository.update(id, data);
+  try {
+    await appointmentRepository.update(id, data);
+  } catch (err) {
+    if (err.code === 'ER_NO_REFERENCED_ROW_2' || err.code === 'ER_NO_REFERENCED_ROW') {
+      throw new AppError('Selected doctor does not exist.', 400);
+    }
+    throw err;
+  }
   return getAppointment(id);
 }
 

@@ -19,12 +19,12 @@ export const publicBookingSchema = z.object({
 export const appointmentUpdateSchema = z.object({
   patient_name: z.string().min(2).optional(),
   mobile: z.string().min(7).optional(),
-  email: z.string().email().optional(),
-  gender: z.string().optional(),
-  age: z.coerce.number().int().min(0).optional(),
-  doctor_id: z.coerce.number().int().optional(),
+  email: z.string().email().nullable().optional(),
+  gender: z.string().nullable().optional(),
+  age: z.coerce.number().int().min(0).nullable().optional(),
+  doctor_id: z.coerce.number().int().nullable().optional(),
   appointment_date: z.string().optional(),
   appointment_time: z.string().optional(),
-  problem_description: z.string().optional(),
+  problem_description: z.string().nullable().optional(),
   status: z.enum(['pending', 'approved', 'cancelled', 'completed']).optional(),
 });

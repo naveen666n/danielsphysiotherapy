@@ -40,13 +40,13 @@ export default function AppointmentEditModal({ appointment, doctors, onClose }) 
       mobile: values.mobile,
       appointment_date: values.appointment_date,
       status: values.status,
+      email: values.email || null,
+      gender: values.gender || null,
+      age: values.age !== '' ? values.age : null,
+      doctor_id: values.doctor_id ? values.doctor_id : null,
+      problem_description: values.problem_description || null,
     };
-    if (values.email) payload.email = values.email;
-    if (values.gender) payload.gender = values.gender;
-    if (values.age !== '') payload.age = values.age;
-    if (values.doctor_id) payload.doctor_id = values.doctor_id;
     if (values.appointment_time) payload.appointment_time = formatTime12Hour(values.appointment_time);
-    if (values.problem_description) payload.problem_description = values.problem_description;
 
     try {
       await updateAppointment.mutateAsync({ id: appointment.id, payload });
