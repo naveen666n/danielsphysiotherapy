@@ -7,14 +7,19 @@ import AppError from '../utils/AppError.js';
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const DOCTORS_UPLOAD_DIR = path.join(__dirname, '../uploads/doctors');
 
+const ALLOWED_MIME_TYPES = ['image/jpeg', 'image/png', 'image/webp'];
+const MIME_EXTENSIONS = {
+  'image/jpeg': '.jpg',
+  'image/png': '.png',
+  'image/webp': '.webp',
+};
+
 const storage = multer.diskStorage({
   destination: (req, file, cb) => cb(null, DOCTORS_UPLOAD_DIR),
   filename: (req, file, cb) => {
-    cb(null, `${crypto.randomUUID()}${path.extname(file.originalname)}`);
+    cb(null, `${crypto.randomUUID()}${MIME_EXTENSIONS[file.mimetype]}`);
   },
 });
-
-const ALLOWED_MIME_TYPES = ['image/jpeg', 'image/png', 'image/webp'];
 
 function fileFilter(req, file, cb) {
   if (!ALLOWED_MIME_TYPES.includes(file.mimetype)) {

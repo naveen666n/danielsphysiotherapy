@@ -1,7 +1,21 @@
+import fs from 'node:fs/promises';
 import multer from 'multer';
 import AppError from '../utils/AppError.js';
 
-export function errorHandler(err, req, res, next) {
+async function cleanupUploadedFile(req) {
+  if (!req.file?.path) return;
+  try {
+    await fs.unlink(req.file.path);
+  } catch (err) {
+    if (err.code !== 'ENOENT') {
+      console.error(`Failed to clean up orphaned upload ${req.file.path}:`, err.message);
+    }
+  }
+}
+
+export async function errorHandler(err, req, res, next) {
+  await cleanupUploadedFile(req);
+
   if (err instanceof AppError) {
     return res.status(err.statusCode).json({
       success: false,
