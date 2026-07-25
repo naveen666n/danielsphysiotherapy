@@ -23,6 +23,7 @@ async function migrate() {
     await connection.query(`USE \`${env.DB_NAME}\``);
     await connection.query(schema);
     await connection.query("INSERT IGNORE INTO roles (name) VALUES ('admin'), ('staff')");
+    await connection.query('INSERT IGNORE INTO hospital_settings (id) VALUES (1)');
     console.log(`Database schema applied successfully to "${env.DB_NAME}".`);
   } finally {
     await connection.end();
