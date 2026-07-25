@@ -7,6 +7,8 @@ import PublicLayout from './layouts/PublicLayout.jsx';
 import Home from './pages/public/Home.jsx';
 import Services from './pages/public/Services.jsx';
 import Doctors from './pages/public/Doctors.jsx';
+import Testimonials from './pages/public/Testimonials.jsx';
+import Contact from './pages/public/Contact.jsx';
 import AdminHome from './pages/admin/AdminHome.jsx';
 import DoctorList from './pages/admin/doctors/DoctorList.jsx';
 import DoctorForm from './pages/admin/doctors/DoctorForm.jsx';
@@ -29,6 +31,8 @@ export default function App() {
         <Route path="/" element={<Home />} />
         <Route path="/services" element={<Services />} />
         <Route path="/doctors" element={<Doctors />} />
+        <Route path="/testimonials" element={<Testimonials />} />
+        <Route path="/contact" element={<Contact />} />
       </Route>
       <Route path="/login" element={<Login />} />
       <Route element={<ProtectedRoute />}>
