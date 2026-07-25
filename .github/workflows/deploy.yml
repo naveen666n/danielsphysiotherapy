@@ -44,15 +44,15 @@ jobs:
             --exclude '.env' \
             --exclude 'src/uploads' \
             -e "ssh -p ${{ secrets.VPS_PORT }}" \
-            ./backend/ "${{ secrets.VPS_USER }}@${{ secrets.VPS_HOST }}:/var/www/danielsphysiotherapy.com/backend/"
+            ./backend/ "${{ secrets.VPS_USER }}@${{ secrets.VPS_HOST }}:/var/www/danielsphysiotherapy/backend/"
 
       - name: Sync frontend build
         run: |
           rsync -avz --delete \
             -e "ssh -p ${{ secrets.VPS_PORT }}" \
-            ./frontend/dist/ "${{ secrets.VPS_USER }}@${{ secrets.VPS_HOST }}:/var/www/danielsphysiotherapy.com/frontend/dist/"
+            ./frontend/dist/ "${{ secrets.VPS_USER }}@${{ secrets.VPS_HOST }}:/var/www/danielsphysiotherapy/frontend/dist/"
 
       - name: Install backend production dependencies and reload PM2
         run: |
           ssh -p "${{ secrets.VPS_PORT }}" "${{ secrets.VPS_USER }}@${{ secrets.VPS_HOST }}" \
-            'cd /var/www/danielsphysiotherapy.com/backend && npm ci --omit=dev && pm2 reload ecosystem.config.cjs --env production'
+            'cd /var/www/danielsphysiotherapy/backend && npm ci --omit=dev && pm2 reload ecosystem.config.cjs --env production'
