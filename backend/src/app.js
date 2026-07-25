@@ -13,8 +13,26 @@ import { apiLimiter } from './middlewares/rateLimiters.js';
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const app = express();
 
+const allowedOrigins = env.FRONTEND_URL.split(',').map((url) => url.trim());
+const localDevOriginPattern = /^https?:\/\/(localhost|127\.0\.0\.1)(:\d+)?$/;
+
 app.use(helmet());
-app.use(cors({ origin: env.FRONTEND_URL, credentials: true }));
+app.use(
+  cors({
+    origin: (origin, callback) => {
+      if (
+        !origin ||
+        allowedOrigins.includes(origin) ||
+        (env.NODE_ENV === 'development' && localDevOriginPattern.test(origin))
+      ) {
+        callback(null, true);
+      } else {
+        callback(new Error('Not allowed by CORS'));
+      }
+    },
+    credentials: true,
+  })
+);
 app.use(express.json());
 app.use(cookieParser());
 if (env.NODE_ENV !== 'test') {
