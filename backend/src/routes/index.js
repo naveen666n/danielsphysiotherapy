@@ -5,6 +5,7 @@ import appointmentRoutes from './appointmentRoutes.js';
 import staffRoutes from './staffRoutes.js';
 import serviceRoutes from './serviceRoutes.js';
 import testimonialRoutes from './testimonialRoutes.js';
+import settingsRoutes from './settingsRoutes.js';
 
 const router = Router();
 
@@ -18,5 +19,6 @@ router.use('/appointments', appointmentRoutes);
 router.use('/staff', staffRoutes);
 router.use('/services', serviceRoutes);
 router.use('/testimonials', testimonialRoutes);
+router.use('/settings', settingsRoutes);
 
 export default router;

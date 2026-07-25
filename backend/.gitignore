@@ -11,5 +11,8 @@ src/uploads/services/*
 !src/uploads/testimonials/
 src/uploads/testimonials/*
 !src/uploads/testimonials/.gitkeep
+!src/uploads/settings/
+src/uploads/settings/*
+!src/uploads/settings/.gitkeep
 *.log
 .DS_Store
