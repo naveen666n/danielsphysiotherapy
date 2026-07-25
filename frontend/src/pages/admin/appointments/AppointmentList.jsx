@@ -3,6 +3,7 @@ import toast from 'react-hot-toast';
 import { useAuth } from '../../../contexts/AuthContext.jsx';
 import { useAppointments, useUpdateAppointment, useDeleteAppointment } from '../../../hooks/useAppointments.js';
 import { useDoctors } from '../../../hooks/useDoctors.js';
+import { useServices } from '../../../hooks/useServices.js';
 import ConfirmDialog from '../../../components/ConfirmDialog.jsx';
 import AppointmentEditModal from './AppointmentEditModal.jsx';
 
@@ -31,6 +32,7 @@ export default function AppointmentList() {
 
   const { data: appointments, isLoading } = useAppointments(filters);
   const { data: doctors } = useDoctors();
+  const { data: services } = useServices();
   const updateAppointment = useUpdateAppointment();
   const deleteAppointment = useDeleteAppointment();
 
@@ -119,6 +121,7 @@ export default function AppointmentList() {
               <th className="px-4 py-3">Patient</th>
               <th className="px-4 py-3">Mobile</th>
               <th className="px-4 py-3">Doctor</th>
+              <th className="px-4 py-3">Service</th>
               <th className="px-4 py-3">Date</th>
               <th className="px-4 py-3">Time</th>
               <th className="px-4 py-3">Status</th>
@@ -128,11 +131,13 @@ export default function AppointmentList() {
           <tbody className="divide-y divide-slate-100">
             {appointments?.map((appointment) => {
               const doctor = doctors?.find((d) => d.id === appointment.doctor_id);
+              const service = services?.find((s) => s.id === appointment.service_id);
               return (
                 <tr key={appointment.id}>
                   <td className="px-4 py-3 font-medium text-slate-800">{appointment.patient_name}</td>
                   <td className="px-4 py-3 text-slate-600">{appointment.mobile}</td>
                   <td className="px-4 py-3 text-slate-600">{doctor?.name || '—'}</td>
+                  <td className="px-4 py-3 text-slate-600">{service?.name || '—'}</td>
                   <td className="px-4 py-3 text-slate-600">{appointment.appointment_date?.slice(0, 10)}</td>
                   <td className="px-4 py-3 text-slate-600">{appointment.appointment_time}</td>
                   <td className="px-4 py-3">
@@ -181,6 +186,7 @@ export default function AppointmentList() {
         <AppointmentEditModal
           appointment={editingAppointment}
           doctors={doctors}
+          services={services}
           onClose={() => setEditingAppointment(null)}
         />
       )}

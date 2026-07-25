@@ -7,6 +7,7 @@ export const publicBookingSchema = z.object({
   gender: z.string().optional(),
   age: z.coerce.number().int().min(0).optional(),
   doctor_id: z.coerce.number().int().optional(),
+  service_id: z.coerce.number().int().optional(),
   appointment_date: z.string().refine((val) => {
     if (Number.isNaN(Date.parse(val))) return false;
     const today = new Date().toISOString().slice(0, 10);
@@ -23,6 +24,7 @@ export const appointmentUpdateSchema = z.object({
   gender: z.string().nullable().optional(),
   age: z.coerce.number().int().min(0).nullable().optional(),
   doctor_id: z.coerce.number().int().nullable().optional(),
+  service_id: z.coerce.number().int().nullable().optional(),
   appointment_date: z.string().optional(),
   appointment_time: z.string().optional(),
   problem_description: z.string().nullable().optional(),

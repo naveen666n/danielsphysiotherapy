@@ -38,6 +38,54 @@ const DEFAULT_CONTENT = {
   footer_tagline: 'Compassionate physiotherapy care for lasting recovery.',
 };
 
+const DEFAULT_SERVICES = [
+  {
+    name: 'Sports Injury Rehabilitation',
+    description:
+      'Assessment and recovery programs for sprains, strains, ligament tears, and other sports-related injuries.',
+    display_order: 1,
+  },
+  {
+    name: 'Post-Surgery Rehabilitation',
+    description:
+      'Guided recovery plans after orthopedic or joint-replacement surgery to restore strength and mobility safely.',
+    display_order: 2,
+  },
+  {
+    name: 'Back & Neck Pain Therapy',
+    description:
+      'Targeted treatment for chronic back pain, cervical spondylosis, sciatica, and posture-related discomfort.',
+    display_order: 3,
+  },
+  {
+    name: 'Manual Therapy & Joint Mobilization',
+    description: 'Hands-on techniques to relieve stiffness, improve joint range of motion, and reduce muscular tension.',
+    display_order: 4,
+  },
+  {
+    name: 'Electrotherapy & Pain Management',
+    description:
+      'TENS, ultrasound, and other modalities used alongside exercise therapy to manage acute and chronic pain.',
+    display_order: 5,
+  },
+  {
+    name: 'Neuro Rehabilitation',
+    description:
+      'Physiotherapy for stroke, paralysis, and other neurological conditions, focused on regaining movement and independence.',
+    display_order: 6,
+  },
+  {
+    name: 'Pediatric Physiotherapy',
+    description: 'Developmental and mobility support for children with delayed milestones or movement difficulties.',
+    display_order: 7,
+  },
+  {
+    name: 'Geriatric Physiotherapy',
+    description: 'Balance training, fall-prevention, and mobility care tailored to the needs of elderly patients.',
+    display_order: 8,
+  },
+];
+
 async function migrate() {
   const schemaPath = path.join(__dirname, '../src/config/schema.sql');
   const schema = fs.readFileSync(schemaPath, 'utf8');
@@ -54,11 +102,38 @@ async function migrate() {
     await connection.query(`CREATE DATABASE IF NOT EXISTS \`${env.DB_NAME}\``);
     await connection.query(`USE \`${env.DB_NAME}\``);
     await connection.query(schema);
+
+    const [existingColumns] = await connection.query(
+      `SELECT COLUMN_NAME FROM information_schema.COLUMNS
+       WHERE TABLE_SCHEMA = ? AND TABLE_NAME = 'appointments' AND COLUMN_NAME = 'service_id'`,
+      [env.DB_NAME]
+    );
+    if (existingColumns.length === 0) {
+      await connection.query('ALTER TABLE appointments ADD COLUMN service_id INT AFTER doctor_id');
+      await connection.query(
+        'ALTER TABLE appointments ADD CONSTRAINT fk_appointments_service FOREIGN KEY (service_id) REFERENCES services(id) ON DELETE SET NULL'
+      );
+      console.log('Added service_id column to appointments.');
+    }
+
     await connection.query("INSERT IGNORE INTO roles (name) VALUES ('admin'), ('staff')");
     await connection.query('INSERT IGNORE INTO hospital_settings (id) VALUES (1)');
     for (const [key, value] of Object.entries(DEFAULT_CONTENT)) {
       await connection.query('INSERT IGNORE INTO site_content (content_key, content_value) VALUES (?, ?)', [key, value]);
     }
+
+    const [[{ count: serviceCount }]] = await connection.query('SELECT COUNT(*) AS count FROM services');
+    if (serviceCount === 0) {
+      for (const service of DEFAULT_SERVICES) {
+        await connection.query('INSERT INTO services (name, description, display_order) VALUES (?, ?, ?)', [
+          service.name,
+          service.description,
+          service.display_order,
+        ]);
+      }
+      console.log(`Seeded ${DEFAULT_SERVICES.length} default services.`);
+    }
+
     console.log(`Database schema applied successfully to "${env.DB_NAME}".`);
   } finally {
     await connection.end();

@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import toast from 'react-hot-toast';
 import { usePublicDoctors } from '../hooks/useDoctors.js';
+import { usePublicServices } from '../hooks/useServices.js';
 import { useBookAppointment } from '../hooks/useAppointments.js';
 import { usePageTitle } from '../hooks/usePageTitle.js';
 import SectionHeading from '../components/public/SectionHeading.jsx';
@@ -19,6 +20,7 @@ const today = new Date().toISOString().slice(0, 10);
 export default function PublicBooking() {
   usePageTitle('Book Appointment');
   const { data: doctors } = usePublicDoctors();
+  const { data: services } = usePublicServices();
   const bookAppointment = useBookAppointment();
   const [submitted, setSubmitted] = useState(false);
 
@@ -34,6 +36,7 @@ export default function PublicBooking() {
       gender: '',
       age: '',
       doctor_id: '',
+      service_id: '',
       appointment_date: today,
       appointment_time: '',
       problem_description: '',
@@ -51,6 +54,7 @@ export default function PublicBooking() {
     if (values.gender) payload.gender = values.gender;
     if (values.age !== '') payload.age = values.age;
     if (values.doctor_id) payload.doctor_id = values.doctor_id;
+    if (values.service_id) payload.service_id = values.service_id;
     if (values.problem_description) payload.problem_description = values.problem_description;
 
     try {
@@ -145,6 +149,21 @@ export default function PublicBooking() {
             {doctors?.map((doctor) => (
               <option key={doctor.id} value={doctor.id}>
                 {doctor.name} ({doctor.specialization || 'General'})
+              </option>
+            ))}
+          </select>
+        </div>
+
+        <div>
+          <label className="mb-1 block text-sm font-medium text-slate-700">Service Needed</label>
+          <select
+            className="w-full rounded-lg border border-slate-300 px-3 py-2 focus:border-teal-500 focus:outline-none"
+            {...register('service_id')}
+          >
+            <option value="">Not sure / General</option>
+            {services?.map((service) => (
+              <option key={service.id} value={service.id}>
+                {service.name}
               </option>
             ))}
           </select>

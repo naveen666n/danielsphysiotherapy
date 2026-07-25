@@ -33,9 +33,9 @@ export async function findById(id) {
 export async function create(appointment) {
   const [result] = await pool.query(
     `INSERT INTO appointments
-      (patient_name, mobile, email, gender, age, doctor_id, appointment_date, appointment_time, problem_description, status)
+      (patient_name, mobile, email, gender, age, doctor_id, service_id, appointment_date, appointment_time, problem_description, status)
      VALUES
-      (:patient_name, :mobile, :email, :gender, :age, :doctor_id, :appointment_date, :appointment_time, :problem_description, :status)`,
+      (:patient_name, :mobile, :email, :gender, :age, :doctor_id, :service_id, :appointment_date, :appointment_time, :problem_description, :status)`,
     appointment
   );
   return result.insertId;

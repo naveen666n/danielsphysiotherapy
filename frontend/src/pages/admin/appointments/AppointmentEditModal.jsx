@@ -12,7 +12,7 @@ function formatTime12Hour(time24) {
   return `${hours}:${minutes} ${suffix}`;
 }
 
-export default function AppointmentEditModal({ appointment, doctors, onClose }) {
+export default function AppointmentEditModal({ appointment, doctors, services, onClose }) {
   const updateAppointment = useUpdateAppointment();
 
   const {
@@ -27,6 +27,7 @@ export default function AppointmentEditModal({ appointment, doctors, onClose }) 
       gender: appointment.gender ?? '',
       age: appointment.age ?? '',
       doctor_id: appointment.doctor_id ?? '',
+      service_id: appointment.service_id ?? '',
       appointment_date: appointment.appointment_date?.slice(0, 10) ?? '',
       appointment_time: '',
       problem_description: appointment.problem_description ?? '',
@@ -44,6 +45,7 @@ export default function AppointmentEditModal({ appointment, doctors, onClose }) 
       gender: values.gender || null,
       age: values.age !== '' ? values.age : null,
       doctor_id: values.doctor_id ? values.doctor_id : null,
+      service_id: values.service_id ? values.service_id : null,
       problem_description: values.problem_description || null,
     };
     if (values.appointment_time) payload.appointment_time = formatTime12Hour(values.appointment_time);
@@ -126,6 +128,21 @@ export default function AppointmentEditModal({ appointment, doctors, onClose }) 
               {doctors?.map((doctor) => (
                 <option key={doctor.id} value={doctor.id}>
                   {doctor.name}
+                </option>
+              ))}
+            </select>
+          </div>
+
+          <div>
+            <label className="mb-1 block text-sm font-medium text-slate-700">Service</label>
+            <select
+              className="w-full rounded border border-slate-300 px-3 py-2 focus:border-blue-500 focus:outline-none"
+              {...register('service_id')}
+            >
+              <option value="">Not sure / General</option>
+              {services?.map((service) => (
+                <option key={service.id} value={service.id}>
+                  {service.name}
                 </option>
               ))}
             </select>
