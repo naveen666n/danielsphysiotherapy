@@ -23,3 +23,7 @@ export function useDeleteMessage() {
     onSuccess: () => queryClient.invalidateQueries({ queryKey: ['contactMessages'] }),
   });
 }
+
+export function useSubmitContactMessage() {
+  return useMutation({ mutationFn: contactMessageService.submitContactMessage });
+}

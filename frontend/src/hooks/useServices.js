@@ -36,3 +36,7 @@ export function useDeleteService() {
     onSuccess: () => queryClient.invalidateQueries({ queryKey: ['services'] }),
   });
 }
+
+export function usePublicServices() {
+  return useQuery({ queryKey: ['services', 'public'], queryFn: serviceService.listPublicServices });
+}

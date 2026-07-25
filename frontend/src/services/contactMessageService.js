@@ -13,3 +13,8 @@ export async function markMessageRead(id, isRead) {
 export async function deleteMessage(id) {
   await api.delete(`/contact-messages/${id}`);
 }
+
+export async function submitContactMessage(payload) {
+  const { data } = await api.post('/contact', payload);
+  return data.data;
+}

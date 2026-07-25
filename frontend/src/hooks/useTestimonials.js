@@ -36,3 +36,7 @@ export function useDeleteTestimonial() {
     onSuccess: () => queryClient.invalidateQueries({ queryKey: ['testimonials'] }),
   });
 }
+
+export function usePublicTestimonials() {
+  return useQuery({ queryKey: ['testimonials', 'public'], queryFn: testimonialService.listPublicTestimonials });
+}

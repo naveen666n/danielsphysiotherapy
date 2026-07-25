@@ -12,3 +12,7 @@ export function useUpdateSettings() {
     onSuccess: () => queryClient.invalidateQueries({ queryKey: ['settings'] }),
   });
 }
+
+export function usePublicSettings() {
+  return useQuery({ queryKey: ['settings', 'public'], queryFn: settingsService.getPublicSettings });
+}

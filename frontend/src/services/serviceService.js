@@ -23,3 +23,8 @@ export async function updateService(id, formData) {
 export async function deleteService(id) {
   await api.delete(`/services/${id}`);
 }
+
+export async function listPublicServices() {
+  const { data } = await api.get('/services/public');
+  return data.data;
+}

@@ -23,3 +23,8 @@ export async function updateTestimonial(id, formData) {
 export async function deleteTestimonial(id) {
   await api.delete(`/testimonials/${id}`);
 }
+
+export async function listPublicTestimonials() {
+  const { data } = await api.get('/testimonials/public');
+  return data.data;
+}
