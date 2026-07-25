@@ -6,6 +6,7 @@ import staffRoutes from './staffRoutes.js';
 import serviceRoutes from './serviceRoutes.js';
 import testimonialRoutes from './testimonialRoutes.js';
 import settingsRoutes from './settingsRoutes.js';
+import contentRoutes from './contentRoutes.js';
 import contactMessageRoutes from './contactMessageRoutes.js';
 import * as contactMessageController from '../controllers/contactMessageController.js';
 import { validate } from '../middlewares/validate.js';
@@ -25,6 +26,7 @@ router.use('/staff', staffRoutes);
 router.use('/services', serviceRoutes);
 router.use('/testimonials', testimonialRoutes);
 router.use('/settings', settingsRoutes);
+router.use('/content', contentRoutes);
 router.post('/contact', contactLimiter, validate(contactMessageSchema), contactMessageController.create);
 router.use('/contact-messages', contactMessageRoutes);
 
