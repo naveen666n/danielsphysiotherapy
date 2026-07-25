@@ -33,6 +33,7 @@ export default function App() {
         <Route path="/doctors" element={<Doctors />} />
         <Route path="/testimonials" element={<Testimonials />} />
         <Route path="/contact" element={<Contact />} />
+        <Route path="/book" element={<PublicBooking />} />
       </Route>
       <Route path="/login" element={<Login />} />
       <Route element={<ProtectedRoute />}>
