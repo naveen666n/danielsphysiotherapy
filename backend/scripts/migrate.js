@@ -6,6 +6,7 @@ import env from '../src/config/env.js';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
+console.log('Running db migrations..');
 const DEFAULT_CONTENT = {
   hero_title: 'Expert Physiotherapy Care You Can Trust',
   hero_subtitle: 'Personalized treatment plans to help you move, heal, and live pain-free.',
