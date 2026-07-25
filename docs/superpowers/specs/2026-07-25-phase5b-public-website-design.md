@@ -61,7 +61,7 @@ CREATE TABLE IF NOT EXISTS site_content (
 | `contact_page_heading` / `contact_page_subheading` | Contact page | `Get In Touch` / `We'd love to hear from you — reach out with any questions.` |
 | `footer_tagline` | Footer | `Compassionate physiotherapy care for lasting recovery.` |
 
-(26 keys total.)
+(28 keys total.)
 
 ### 3.3 Files
 
@@ -74,7 +74,7 @@ backend/src/
   routes/contentRoutes.js             (new)
   routes/index.js                     (modified — mount at /content)
   config/schema.sql                   (modified — new table)
-  scripts/migrate.js                  (modified — seed 26 default rows)
+  scripts/migrate.js                  (modified — seed 28 default rows)
 ```
 
 ### 3.4 Repository (`contentRepository.js`)
@@ -125,7 +125,7 @@ export async function updateContent(data) {
 
 ### 3.6 Validator (`contentValidators.js`)
 
-Exact allowlist of the 26 keys above, each optional (partial updates allowed), `.strict()` so unknown keys are rejected with a 400 rather than silently dropped or inserted:
+Exact allowlist of the 28 keys above, each optional (partial updates allowed), `.strict()` so unknown keys are rejected with a 400 rather than silently dropped or inserted:
 
 ```js
 import { z } from 'zod';
@@ -200,7 +200,7 @@ Mounted in `routes/index.js` as `router.use('/content', contentRoutes);`.
 
 ### 3.9 Migration Seed
 
-In `backend/scripts/migrate.js`, after the existing hospital_settings seed, insert all 26 default rows (from the table in 3.2) with `INSERT IGNORE INTO site_content (content_key, content_value) VALUES (:key, :value)`, one per key — same non-destructive pattern as the existing roles/settings seeds.
+In `backend/scripts/migrate.js`, after the existing hospital_settings seed, insert all 28 default rows (from the table in 3.2) with `INSERT IGNORE INTO site_content (content_key, content_value) VALUES (:key, :value)`, one per key — same non-destructive pattern as the existing roles/settings seeds.
 
 ## 4. Frontend
 
@@ -274,11 +274,11 @@ export function usePublicContent() {
 }
 ```
 
-Every public page calls this once. Because the DB is always fully seeded (26 keys, `INSERT IGNORE` guarantees every key exists after migrate), `content.hero_title` etc. are always defined once the query resolves — no per-field fallback chains needed. While loading, pages render their static structural chrome (layout, images, buttons) with text nodes empty/skeleton rather than blocking the whole page — same `isLoading` pattern used elsewhere in the app.
+Every public page calls this once. Because the DB is always fully seeded (28 keys, `INSERT IGNORE` guarantees every key exists after migrate), `content.hero_title` etc. are always defined once the query resolves — no per-field fallback chains needed. While loading, pages render their static structural chrome (layout, images, buttons) with text nodes empty/skeleton rather than blocking the whole page — same `isLoading` pattern used elsewhere in the app.
 
 ### 4.4 `SiteContentForm.jsx` (admin)
 
-Single always-editable form, same pattern as `SettingsForm.jsx`: one `useContent()` query pre-fills a `react-hook-form`, grouped into visually separated sections matching 3.2's grouping (Hero, Trust Strip, About, Why Choose Us ×4, Section Headings, Page Headers ×4, Footer) with `<input>` for short titles and `<textarea>` for body copy. One `useUpdateContent()` mutation submits the full form (all 26 fields — simpler than diffing, matches the field count and avoids partial-update UI complexity for a form this size). Admin-only route and nav link, matching Settings — staff never see this screen in the UI even though the backend permits staff reads.
+Single always-editable form, same pattern as `SettingsForm.jsx`: one `useContent()` query pre-fills a `react-hook-form`, grouped into visually separated sections matching 3.2's grouping (Hero, Trust Strip, About, Why Choose Us ×4, Section Headings, Page Headers ×4, Footer) with `<input>` for short titles and `<textarea>` for body copy. One `useUpdateContent()` mutation submits the full form (all 28 fields — simpler than diffing, matches the field count and avoids partial-update UI complexity for a form this size). Admin-only route and nav link, matching Settings — staff never see this screen in the UI even though the backend permits staff reads.
 
 ### 4.5 `PublicLayout.jsx`, Header, Footer
 
@@ -323,7 +323,7 @@ Called once per public page with a short static string (e.g. `usePageTitle('Serv
 ## 6. Verification (no automated test suite, per Phase 1's standing decision)
 
 1. Backend: a standalone Node ESM script exercising `contentRepository`/`contentService` against the real DB (seed presence, `upsertMany` partial update, unknown-key rejection at the validator level).
-2. `curl` sequences: `GET /content/public` unauthenticated returns all 26 keys; `GET /content` as staff succeeds (read), `PUT /content` as staff returns 403; `PUT /content` as admin with a partial payload updates only those keys and leaves the rest unchanged; `PUT /content` with an unknown key returns 400.
+2. `curl` sequences: `GET /content/public` unauthenticated returns all 28 keys; `GET /content` as staff succeeds (read), `PUT /content` as staff returns 403; `PUT /content` as admin with a partial payload updates only those keys and leaves the rest unchanged; `PUT /content` with an unknown key returns 400.
 3. Live Playwright walkthrough: all six public pages plus `/book`, at both a desktop and a mobile (375px) viewport — verify real seeded data renders (1 doctor, hospital settings), Services/Testimonials empty states render correctly, the Home preview sections link to the right full pages, the contact form successfully posts and the message appears in the admin inbox, nav/footer links resolve (including `/login`), and an admin edit in `/admin/content` (e.g. changing `hero_title`) is immediately reflected on the public Home page after a refresh.
 4. Doctor-photo and existing-module regression spot-check: confirm nothing in Phase 5a's admin screens broke (no backend files from prior phases are modified except `routes/index.js`, `schema.sql`, and `migrate.js`, all additive).
 
