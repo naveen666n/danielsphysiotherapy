@@ -48,6 +48,12 @@ export default function PublicHeader() {
             </NavLink>
           ))}
           <Link
+            to="/login"
+            className="rounded-full border border-teal-600 px-4 py-2 text-sm font-semibold text-teal-700 hover:bg-teal-50"
+          >
+            Hospital Login
+          </Link>
+          <Link
             to="/book"
             className="rounded-full bg-amber-500 px-5 py-2 text-sm font-semibold text-white shadow-sm hover:bg-amber-600"
           >
@@ -73,6 +79,13 @@ export default function PublicHeader() {
               {link.label}
             </NavLink>
           ))}
+          <Link
+            to="/login"
+            onClick={() => setMenuOpen(false)}
+            className="mt-1 rounded-full border border-teal-600 px-4 py-2 text-center text-sm font-semibold text-teal-700"
+          >
+            Hospital Login
+          </Link>
           <Link
             to="/book"
             onClick={() => setMenuOpen(false)}
