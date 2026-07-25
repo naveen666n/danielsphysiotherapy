@@ -3,6 +3,7 @@ import { usePublicSettings } from '../../hooks/useSettings.js';
 import { usePageTitle } from '../../hooks/usePageTitle.js';
 import SectionHeading from '../../components/public/SectionHeading.jsx';
 import ContactForm from '../../components/public/ContactForm.jsx';
+import GoogleMapEmbed from '../../components/public/GoogleMapEmbed.jsx';
 
 export default function Contact() {
   usePageTitle('Contact');
@@ -21,6 +22,7 @@ export default function Contact() {
             {settings?.email && <li>{settings.email}</li>}
             {settings?.opening_hours && <li>{settings.opening_hours}</li>}
           </ul>
+          <GoogleMapEmbed address={settings?.address} className="h-56 w-full rounded-xl border border-slate-200" />
           {settings?.google_map_link && (
             <a
               href={settings.google_map_link}

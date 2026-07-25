@@ -10,6 +10,7 @@ import ServiceCard from '../../components/public/ServiceCard.jsx';
 import DoctorCard from '../../components/public/DoctorCard.jsx';
 import TestimonialCard from '../../components/public/TestimonialCard.jsx';
 import EmptyState from '../../components/public/EmptyState.jsx';
+import GoogleMapEmbed from '../../components/public/GoogleMapEmbed.jsx';
 
 const whyIcons = [
   <svg key="1" viewBox="0 0 24 24" fill="none" stroke="currentColor" className="h-8 w-8">
@@ -151,6 +152,7 @@ export default function Home() {
 
       <section className="mx-auto max-w-6xl px-4 py-16 sm:px-6">
         <SectionHeading title={content?.home_contact_heading} />
+        <GoogleMapEmbed address={settings?.address} className="mb-6 h-64 w-full rounded-xl border border-slate-200" />
         <div className="grid grid-cols-1 gap-6 rounded-xl bg-teal-600 p-8 text-white sm:grid-cols-2">
           <div className="space-y-2">
             {settings?.address && <p>{settings.address}</p>}
