@@ -16,6 +16,7 @@ import TestimonialForm from './pages/admin/testimonials/TestimonialForm.jsx';
 import SettingsForm from './pages/admin/settings/SettingsForm.jsx';
 import ContactMessageList from './pages/admin/contact/ContactMessageList.jsx';
 import ProtectedRoute from './routes/ProtectedRoute.jsx';
+import SiteContentForm from './pages/admin/content/SiteContentForm.jsx';
 
 export default function App() {
   return (
@@ -42,6 +43,7 @@ export default function App() {
             <Route path="testimonials/new" element={<TestimonialForm />} />
             <Route path="testimonials/:id/edit" element={<TestimonialForm />} />
             <Route path="settings" element={<SettingsForm />} />
+            <Route path="content" element={<SiteContentForm />} />
           </Route>
         </Route>
       </Route>

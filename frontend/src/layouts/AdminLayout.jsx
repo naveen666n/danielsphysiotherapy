@@ -64,6 +64,11 @@ export default function AdminLayout() {
                 Settings
               </NavLink>
             )}
+            {user?.role === 'admin' && (
+              <NavLink to="/admin/content" className={navLinkClass}>
+                Site Content
+              </NavLink>
+            )}
           </nav>
         </aside>
         <main className="flex-1 p-6">
