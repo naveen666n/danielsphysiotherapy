@@ -29,7 +29,7 @@ Uploaded files (`backend/src/uploads/{doctors,services,testimonials,settings}/`)
 The heaviest step — `vite build` — must not run on the 1GB VPS. It runs on the GitHub Actions runner instead:
 
 1. **GitHub Actions runner:** checkout repo, `cd frontend && npm ci && npm run build` → produces `frontend/dist/`.
-2. **rsync over SSH:** ships `backend/` (excluding `node_modules/`, `src/uploads/`, `.env`) and the built `frontend/dist/` to the VPS at a fixed deploy path (e.g. `/var/www/danielsphysio`).
+2. **rsync over SSH:** ships `backend/` (excluding `node_modules/`, `src/uploads/`, `.env`) and the built `frontend/dist/` to the VPS at a fixed deploy path (e.g. `/var/www/danielsphysiotherapy.com`).
 3. **SSH into the VPS**, run only light steps there:
    - `cd backend && npm ci --omit=dev` — production deps only. This step **must** run on the VPS itself, not be built in CI and copied over: `bcrypt` has native bindings compiled against the target OS/arch, and CI's runner architecture is not guaranteed to match the VPS.
    - `pm2 reload ecosystem.config.cjs --env production` — reloads the backend process with the new code.
@@ -77,11 +77,11 @@ server {
     }
 
     location /uploads/ {
-        alias /var/www/danielsphysio/backend/src/uploads/;
+        alias /var/www/danielsphysiotherapy.com/backend/src/uploads/;
     }
 
     location / {
-        root /var/www/danielsphysio/frontend/dist;
+        root /var/www/danielsphysiotherapy.com/frontend/dist;
         try_files $uri /index.html;
     }
 }
@@ -100,8 +100,8 @@ Triggers on push to `main`. Steps:
 1. Checkout.
 2. `cd frontend && npm ci && npm run build`.
 3. Load the deploy SSH key via `webfactory/ssh-agent` (reads `secrets.VPS_SSH_KEY`).
-4. `rsync -avz --delete --exclude 'node_modules' --exclude '.env' --exclude 'src/uploads' ./backend/ user@host:/var/www/danielsphysio/backend/` and `rsync -avz --delete ./frontend/dist/ user@host:/var/www/danielsphysio/frontend/dist/`.
-5. `ssh user@host 'cd /var/www/danielsphysio/backend && npm ci --omit=dev && pm2 reload ecosystem.config.cjs --env production'`.
+4. `rsync -avz --delete --exclude 'node_modules' --exclude '.env' --exclude 'src/uploads' ./backend/ user@host:/var/www/danielsphysiotherapy.com/backend/` and `rsync -avz --delete ./frontend/dist/ user@host:/var/www/danielsphysiotherapy.com/frontend/dist/`.
+5. `ssh user@host 'cd /var/www/danielsphysiotherapy.com/backend && npm ci --omit=dev && pm2 reload ecosystem.config.cjs --env production'`.
 
 **Required GitHub repo secrets** (added once by hand, never committed):
 
@@ -119,12 +119,12 @@ Triggers on push to `main`. Steps:
 Documented in `docs/superpowers/deploy-runbook.md`, run once per fresh VPS:
 
 1. Install Node.js 22.x LTS (via NodeSource: `curl -fsSL https://deb.nodesource.com/setup_22.x | bash -` then `apt install nodejs`), then `npm i -g pm2`, `apt install nginx certbot python3-certbot-nginx`.
-2. `mkdir -p /var/www/danielsphysio`, clone the repo there.
+2. `mkdir -p /var/www/danielsphysiotherapy.com`, clone the repo there.
 3. Create `backend/.env` by hand with real values (DB credentials from the managed MySQL provider, a strong `JWT_SECRET`, `NODE_ENV=production`, `FRONTEND_URL=https://naveennallanti.com`).
 4. `cd backend && npm ci --omit=dev` (first install, manual).
 5. `pm2 start ecosystem.config.cjs --env production && pm2 save && pm2 startup` (the printed `pm2 startup` command must be run once as root to enable boot-time restart).
 6. `cd frontend && npm ci && npm run build` (first build, manual — later builds happen in CI).
-7. Copy `deploy/nginx.conf` to `/etc/nginx/sites-available/danielsphysio`, symlink to `sites-enabled/`, `nginx -t && systemctl reload nginx`.
+7. Copy `deploy/nginx.conf` to `/etc/nginx/sites-available/danielsphysiotherapy.com`, symlink to `sites-enabled/`, `nginx -t && systemctl reload nginx`.
 8. `certbot --nginx -d naveennallanti.com` — obtains the cert, rewrites the Nginx config for HTTPS, sets up auto-renewal.
 9. Generate a deploy-only SSH keypair (`ssh-keygen`), append the public key to `~/.ssh/authorized_keys` on the VPS, add the private key + host/user/port to the GitHub repo secrets (§5).
 
