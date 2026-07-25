@@ -1,8 +1,10 @@
-import { Routes, Route, Navigate } from 'react-router-dom';
+import { Routes, Route } from 'react-router-dom';
 import Login from './pages/Login.jsx';
 import NotFound from './pages/NotFound.jsx';
 import PublicBooking from './pages/PublicBooking.jsx';
 import AdminLayout from './layouts/AdminLayout.jsx';
+import PublicLayout from './layouts/PublicLayout.jsx';
+import Home from './pages/public/Home.jsx';
 import AdminHome from './pages/admin/AdminHome.jsx';
 import DoctorList from './pages/admin/doctors/DoctorList.jsx';
 import DoctorForm from './pages/admin/doctors/DoctorForm.jsx';
@@ -21,9 +23,10 @@ import SiteContentForm from './pages/admin/content/SiteContentForm.jsx';
 export default function App() {
   return (
     <Routes>
-      <Route path="/" element={<Navigate to="/login" replace />} />
+      <Route element={<PublicLayout />}>
+        <Route path="/" element={<Home />} />
+      </Route>
       <Route path="/login" element={<Login />} />
-      <Route path="/book" element={<PublicBooking />} />
       <Route element={<ProtectedRoute />}>
         <Route path="/admin" element={<AdminLayout />}>
           <Route index element={<AdminHome />} />
