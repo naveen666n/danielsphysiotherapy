@@ -2,6 +2,8 @@
 
 One-time manual setup for a fresh VPS. Run once per server — ongoing deploys after this are automatic via `.github/workflows/deploy.yml` on every push to `main`.
 
+> **Merge order matters:** complete steps 1-8 below (through registering the four GitHub secrets) *before* merging the branch that adds `.github/workflows/deploy.yml` to `main`. Otherwise the workflow's first run fires against a VPS that isn't bootstrapped yet and fails — harmless since nothing is live yet, but a confusing first red run.
+
 ## Prerequisites
 
 - A VPS with SSH access (this project targets a 1 CPU / 1GB RAM box — no Docker, everything below runs as native OS processes).
@@ -58,7 +60,7 @@ npm run seed:admin   # creates the first admin user from .env values above
 
 cd /var/www/danielsphysiotherapy.com/frontend
 npm ci
-npm run build
+VITE_API_URL=/api npm run build
 ```
 
 ## 5. Start the backend under PM2
@@ -95,7 +97,8 @@ Certbot rewrites `/etc/nginx/sites-available/danielsphysiotherapy.com` in place 
 
 ```bash
 ssh-keygen -t ed25519 -f ~/.ssh/deploy_key -N "" -C "github-actions-deploy"
-cat ~/.ssh/deploy_key.pub >> ~/.ssh/authorized_keys
+mkdir -p ~/.ssh && chmod 700 ~/.ssh
+cat ~/.ssh/deploy_key.pub >> ~/.ssh/authorized_keys && chmod 600 ~/.ssh/authorized_keys
 cat ~/.ssh/deploy_key   # copy this private key
 ```
 

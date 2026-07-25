@@ -23,6 +23,8 @@ jobs:
 
       - name: Build frontend
         working-directory: frontend
+        env:
+          VITE_API_URL: /api
         run: npm run build
 
       - name: Set up SSH agent
