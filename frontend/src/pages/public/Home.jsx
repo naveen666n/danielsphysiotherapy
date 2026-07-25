@@ -95,7 +95,7 @@ export default function Home() {
         )}
         <div className="mt-8 text-center">
           <Link to="/services" className="font-semibold text-teal-600 hover:text-teal-700">
-            View All Services →
+            See what we are offering else →
           </Link>
         </div>
       </section>
