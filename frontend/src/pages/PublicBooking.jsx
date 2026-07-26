@@ -17,6 +17,10 @@ function formatTime12Hour(time24) {
 
 const today = new Date().toISOString().slice(0, 10);
 
+const fieldClass =
+  'w-full rounded-[3px] border border-brand-line px-3.5 py-3 text-[14.5px] text-brand-ink focus:border-brand-sage focus:outline-2 focus:outline-brand-sage focus:outline-offset-1';
+const labelClass = 'mb-2 block font-mono-brand text-[11.5px] tracking-[0.06em] text-brand-ink-soft uppercase';
+
 export default function PublicBooking() {
   usePageTitle('Book Appointment');
   const { data: doctors } = usePublicDoctors();
@@ -68,8 +72,8 @@ export default function PublicBooking() {
   if (submitted) {
     return (
       <div className="mx-auto max-w-lg px-4 py-24 text-center sm:px-6">
-        <h1 className="mb-2 text-2xl font-semibold text-teal-700">Appointment Requested</h1>
-        <p className="text-slate-600">
+        <h1 className="font-display mb-2 text-2xl font-normal text-brand-navy">Appointment Requested</h1>
+        <p className="text-brand-ink-soft">
           Thank you! We've received your request and will contact you shortly to confirm.
         </p>
       </div>
@@ -77,61 +81,53 @@ export default function PublicBooking() {
   }
 
   return (
-    <div className="mx-auto max-w-lg px-4 py-16 sm:px-6">
-      <SectionHeading title="Book an Appointment" subtitle="Fill in your details and we'll confirm your slot shortly." />
-      <form onSubmit={handleSubmit(onSubmit)} className="space-y-4 rounded-xl border border-slate-100 bg-white p-6 shadow-sm sm:p-8">
+    <div className="mx-auto max-w-lg px-4 py-20 sm:px-6 sm:py-24">
+      <SectionHeading
+        eyebrow="Get In Touch"
+        title="Book an Appointment"
+        subtitle="Fill in your details and we'll confirm your slot shortly."
+      />
+      <form onSubmit={handleSubmit(onSubmit)} className="space-y-4.5 rounded-[4px] border border-brand-line bg-white p-6 sm:p-8">
         <div>
-          <label className="mb-1 block text-sm font-medium text-slate-700">Full Name</label>
+          <label className={labelClass}>Full Name</label>
           <input
             type="text"
-            className="w-full rounded-lg border border-slate-300 px-3 py-2 focus:border-teal-500 focus:outline-none"
+            className={fieldClass}
             {...register('patient_name', {
               required: 'Name is required',
               minLength: { value: 2, message: 'Name must be at least 2 characters' },
             })}
           />
-          {errors.patient_name && <p className="mt-1 text-sm text-red-600">{errors.patient_name.message}</p>}
+          {errors.patient_name && <p className="mt-1.5 text-sm text-red-600">{errors.patient_name.message}</p>}
         </div>
 
         <div>
-          <label className="mb-1 block text-sm font-medium text-slate-700">Mobile Number</label>
+          <label className={labelClass}>Mobile Number</label>
           <input
             type="tel"
-            className="w-full rounded-lg border border-slate-300 px-3 py-2 focus:border-teal-500 focus:outline-none"
+            className={fieldClass}
             {...register('mobile', {
               required: 'Mobile number is required',
               minLength: { value: 7, message: 'Enter a valid mobile number' },
             })}
           />
-          {errors.mobile && <p className="mt-1 text-sm text-red-600">{errors.mobile.message}</p>}
+          {errors.mobile && <p className="mt-1.5 text-sm text-red-600">{errors.mobile.message}</p>}
         </div>
 
         <div className="grid grid-cols-2 gap-4">
           <div>
-            <label className="mb-1 block text-sm font-medium text-slate-700">Email (optional)</label>
-            <input
-              type="email"
-              className="w-full rounded-lg border border-slate-300 px-3 py-2 focus:border-teal-500 focus:outline-none"
-              {...register('email')}
-            />
+            <label className={labelClass}>Email (optional)</label>
+            <input type="email" className={fieldClass} {...register('email')} />
           </div>
           <div>
-            <label className="mb-1 block text-sm font-medium text-slate-700">Age (optional)</label>
-            <input
-              type="number"
-              min="0"
-              className="w-full rounded-lg border border-slate-300 px-3 py-2 focus:border-teal-500 focus:outline-none"
-              {...register('age')}
-            />
+            <label className={labelClass}>Age (optional)</label>
+            <input type="number" min="0" className={fieldClass} {...register('age')} />
           </div>
         </div>
 
         <div>
-          <label className="mb-1 block text-sm font-medium text-slate-700">Gender (optional)</label>
-          <select
-            className="w-full rounded-lg border border-slate-300 px-3 py-2 focus:border-teal-500 focus:outline-none"
-            {...register('gender')}
-          >
+          <label className={labelClass}>Gender (optional)</label>
+          <select className={fieldClass} {...register('gender')}>
             <option value="">Prefer not to say</option>
             <option value="Male">Male</option>
             <option value="Female">Female</option>
@@ -140,11 +136,8 @@ export default function PublicBooking() {
         </div>
 
         <div>
-          <label className="mb-1 block text-sm font-medium text-slate-700">Doctor</label>
-          <select
-            className="w-full rounded-lg border border-slate-300 px-3 py-2 focus:border-teal-500 focus:outline-none"
-            {...register('doctor_id')}
-          >
+          <label className={labelClass}>Doctor</label>
+          <select className={fieldClass} {...register('doctor_id')}>
             <option value="">General Inquiry / Not sure</option>
             {doctors?.map((doctor) => (
               <option key={doctor.id} value={doctor.id}>
@@ -155,11 +148,8 @@ export default function PublicBooking() {
         </div>
 
         <div>
-          <label className="mb-1 block text-sm font-medium text-slate-700">Service Needed</label>
-          <select
-            className="w-full rounded-lg border border-slate-300 px-3 py-2 focus:border-teal-500 focus:outline-none"
-            {...register('service_id')}
-          >
+          <label className={labelClass}>Service Needed</label>
+          <select className={fieldClass} {...register('service_id')}>
             <option value="">Not sure / General</option>
             {services?.map((service) => (
               <option key={service.id} value={service.id}>
@@ -171,39 +161,26 @@ export default function PublicBooking() {
 
         <div className="grid grid-cols-2 gap-4">
           <div>
-            <label className="mb-1 block text-sm font-medium text-slate-700">Preferred Date</label>
-            <input
-              type="date"
-              min={today}
-              className="w-full rounded-lg border border-slate-300 px-3 py-2 focus:border-teal-500 focus:outline-none"
-              {...register('appointment_date', { required: 'Date is required' })}
-            />
-            {errors.appointment_date && <p className="mt-1 text-sm text-red-600">{errors.appointment_date.message}</p>}
+            <label className={labelClass}>Preferred Date</label>
+            <input type="date" min={today} className={fieldClass} {...register('appointment_date', { required: 'Date is required' })} />
+            {errors.appointment_date && <p className="mt-1.5 text-sm text-red-600">{errors.appointment_date.message}</p>}
           </div>
           <div>
-            <label className="mb-1 block text-sm font-medium text-slate-700">Preferred Time</label>
-            <input
-              type="time"
-              className="w-full rounded-lg border border-slate-300 px-3 py-2 focus:border-teal-500 focus:outline-none"
-              {...register('appointment_time', { required: 'Time is required' })}
-            />
-            {errors.appointment_time && <p className="mt-1 text-sm text-red-600">{errors.appointment_time.message}</p>}
+            <label className={labelClass}>Preferred Time</label>
+            <input type="time" className={fieldClass} {...register('appointment_time', { required: 'Time is required' })} />
+            {errors.appointment_time && <p className="mt-1.5 text-sm text-red-600">{errors.appointment_time.message}</p>}
           </div>
         </div>
 
         <div>
-          <label className="mb-1 block text-sm font-medium text-slate-700">Problem Description (optional)</label>
-          <textarea
-            rows="3"
-            className="w-full rounded-lg border border-slate-300 px-3 py-2 focus:border-teal-500 focus:outline-none"
-            {...register('problem_description')}
-          />
+          <label className={labelClass}>Problem Description (optional)</label>
+          <textarea rows="3" className={fieldClass} {...register('problem_description')} />
         </div>
 
         <button
           type="submit"
           disabled={isSubmitting}
-          className="w-full rounded-full bg-teal-600 px-4 py-2.5 font-semibold text-white hover:bg-teal-700 disabled:opacity-50"
+          className="w-full rounded-[3px] bg-brand-navy px-4 py-3.5 text-sm font-semibold text-white transition-colors hover:bg-[#0d3a63] disabled:opacity-50"
         >
           {isSubmitting ? 'Booking...' : 'Book Appointment'}
         </button>

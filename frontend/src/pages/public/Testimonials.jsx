@@ -11,10 +11,10 @@ export default function Testimonials() {
   const { data: testimonials, isLoading } = usePublicTestimonials();
 
   return (
-    <div className="mx-auto max-w-6xl px-4 py-16 sm:px-6">
-      <SectionHeading title={content?.testimonials_page_heading} subtitle={content?.testimonials_page_subheading} />
+    <div className="mx-auto max-w-6xl px-4 py-20 sm:px-6 sm:py-24">
+      <SectionHeading eyebrow="Patient Stories" title={content?.testimonials_page_heading} subtitle={content?.testimonials_page_subheading} />
       {isLoading ? (
-        <p className="text-center text-slate-400">Loading testimonials...</p>
+        <p className="text-center text-brand-ink-soft">Loading testimonials...</p>
       ) : (testimonials || []).length === 0 ? (
         <EmptyState label="Patient testimonials" />
       ) : (

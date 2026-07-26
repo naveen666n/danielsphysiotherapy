@@ -11,10 +11,10 @@ export default function Services() {
   const { data: services, isLoading } = usePublicServices();
 
   return (
-    <div className="mx-auto max-w-6xl px-4 py-16 sm:px-6">
-      <SectionHeading title={content?.services_page_heading} subtitle={content?.services_page_subheading} />
+    <div className="mx-auto max-w-6xl px-4 py-20 sm:px-6 sm:py-24">
+      <SectionHeading eyebrow="What We Treat" title={content?.services_page_heading} subtitle={content?.services_page_subheading} />
       {isLoading ? (
-        <p className="text-center text-slate-400">Loading services...</p>
+        <p className="text-center text-brand-ink-soft">Loading services...</p>
       ) : (services || []).length === 0 ? (
         <EmptyState label="Services" />
       ) : (

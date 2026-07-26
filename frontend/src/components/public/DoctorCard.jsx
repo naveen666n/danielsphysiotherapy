@@ -2,33 +2,35 @@ import { getPhotoUrl } from '../../utils/photoUrl.js';
 
 export default function DoctorCard({ doctor }) {
   return (
-    <div className="overflow-hidden rounded-xl border border-slate-100 bg-white text-center shadow-sm transition hover:shadow-md">
-      <div className="mx-auto mt-6 h-28 w-28 overflow-hidden rounded-full bg-teal-50">
+    <div className="overflow-hidden rounded-[4px] border border-brand-line bg-white transition-shadow hover:shadow-[0_18px_40px_-24px_rgba(11,46,78,0.35)]">
+      <div className="aspect-4/5 bg-brand-ice">
         {doctor.photo_url ? (
           <img src={getPhotoUrl(doctor.photo_url)} alt={doctor.name} className="h-full w-full object-cover" />
         ) : (
-          <div className="flex h-full items-center justify-center text-2xl font-bold text-teal-300">
-            {doctor.name.charAt(0)}
+          <div className="flex h-full items-center justify-center bg-brand-navy">
+            <span className="font-display text-5xl text-white italic">{doctor.name.charAt(0)}</span>
           </div>
         )}
       </div>
-      <div className="p-5">
-        <h3 className="text-lg font-semibold text-slate-800">{doctor.name}</h3>
-        {doctor.specialization && <p className="text-sm text-teal-600">{doctor.specialization}</p>}
-        {doctor.qualification && <p className="mt-1 text-sm text-slate-500">{doctor.qualification}</p>}
-        {doctor.experience_years != null && (
-          <p className="mt-1 text-xs text-slate-400">{doctor.experience_years}+ years experience</p>
+      <div className="p-6">
+        <h3 className="font-display text-xl text-brand-navy italic">{doctor.name}</h3>
+        {doctor.specialization && (
+          <p className="mt-1.5 font-mono-brand text-[10.5px] tracking-[0.08em] text-brand-blue uppercase">{doctor.specialization}</p>
         )}
-        {(doctor.working_days || doctor.available_time) && (
-          <p className="mt-3 text-xs text-slate-500">
-            {doctor.working_days}
-            {doctor.working_days && doctor.available_time ? ' · ' : ''}
-            {doctor.available_time}
-          </p>
+        {doctor.qualification && <p className="mt-3 text-sm text-brand-ink-soft">{doctor.qualification}</p>}
+        {(doctor.experience_years != null || doctor.working_days || doctor.available_time) && (
+          <div className="mt-4 space-y-1 border-t border-brand-line pt-4 text-[13px] text-brand-ink-soft">
+            {doctor.experience_years != null && <p>{doctor.experience_years}+ years experience</p>}
+            {(doctor.working_days || doctor.available_time) && (
+              <p>
+                {doctor.working_days}
+                {doctor.working_days && doctor.available_time ? ' · ' : ''}
+                {doctor.available_time}
+              </p>
+            )}
+          </div>
         )}
-        {doctor.consultation_fee != null && (
-          <p className="mt-2 text-sm font-medium text-slate-700">Consultation: ₹{doctor.consultation_fee}</p>
-        )}
+        {doctor.consultation_fee != null && <p className="mt-3 text-sm font-medium text-brand-navy">Consultation: ₹{doctor.consultation_fee}</p>}
       </div>
     </div>
   );

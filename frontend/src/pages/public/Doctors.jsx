@@ -11,10 +11,10 @@ export default function Doctors() {
   const { data: doctors, isLoading } = usePublicDoctors();
 
   return (
-    <div className="mx-auto max-w-6xl px-4 py-16 sm:px-6">
-      <SectionHeading title={content?.doctors_page_heading} subtitle={content?.doctors_page_subheading} />
+    <div className="mx-auto max-w-6xl px-4 py-20 sm:px-6 sm:py-24">
+      <SectionHeading eyebrow="Meet the Team" title={content?.doctors_page_heading} subtitle={content?.doctors_page_subheading} />
       {isLoading ? (
-        <p className="text-center text-slate-400">Loading doctors...</p>
+        <p className="text-center text-brand-ink-soft">Loading doctors...</p>
       ) : (doctors || []).length === 0 ? (
         <EmptyState label="Doctor profiles" />
       ) : (
