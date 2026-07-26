@@ -38,9 +38,9 @@ export default function PublicHeader() {
             />
           ) : (
             <svg viewBox="0 0 40 40" fill="none" className="h-9 w-9 shrink-0">
-              <circle cx="20" cy="20" r="19" stroke="#1C6E8C" strokeWidth="1.4" />
-              <rect x="17" y="10" width="6" height="20" rx="1.5" fill="#0B2E4E" />
-              <rect x="10" y="17" width="20" height="6" rx="1.5" fill="#4C8C6B" />
+              <circle cx="20" cy="20" r="19" style={{ stroke: 'var(--color-brand-blue)' }} strokeWidth="1.4" />
+              <rect x="17" y="10" width="6" height="20" rx="1.5" style={{ fill: 'var(--color-brand-navy)' }} />
+              <rect x="10" y="17" width="20" height="6" rx="1.5" style={{ fill: 'var(--color-brand-sage)' }} />
             </svg>
           )}
           <span className="hidden h-8 w-px bg-brand-line sm:block" aria-hidden="true" />
@@ -78,13 +78,13 @@ export default function PublicHeader() {
           </div>
           <Link
             to="/login"
-            className="rounded-[3px] border border-brand-navy px-4 py-2.5 text-sm font-semibold text-brand-navy transition-colors hover:bg-brand-navy hover:text-white"
+            className="rounded-[var(--radius-button)] border border-brand-navy px-4 py-2.5 text-sm font-semibold text-brand-navy transition-colors hover:bg-brand-navy hover:text-white"
           >
             Hospital Login
           </Link>
           <Link
             to="/book"
-            className="rounded-[3px] bg-brand-navy px-5 py-2.5 text-sm font-semibold text-white transition-colors hover:bg-[#0d3a63]"
+            className="rounded-[var(--radius-button)] bg-brand-navy px-5 py-2.5 text-sm font-semibold text-white transition-colors hover:bg-[var(--color-brand-navy-hover)]"
           >
             Book Appointment
           </Link>
@@ -111,14 +111,14 @@ export default function PublicHeader() {
           <Link
             to="/login"
             onClick={() => setMenuOpen(false)}
-            className="mt-1 rounded-[3px] border border-brand-navy px-4 py-2 text-center text-sm font-semibold text-brand-navy"
+            className="mt-1 rounded-[var(--radius-button)] border border-brand-navy px-4 py-2 text-center text-sm font-semibold text-brand-navy"
           >
             Hospital Login
           </Link>
           <Link
             to="/book"
             onClick={() => setMenuOpen(false)}
-            className="mt-1 rounded-[3px] bg-brand-navy px-5 py-2 text-center text-sm font-semibold text-white"
+            className="mt-1 rounded-[var(--radius-button)] bg-brand-navy px-5 py-2 text-center text-sm font-semibold text-white"
           >
             Book Appointment
           </Link>

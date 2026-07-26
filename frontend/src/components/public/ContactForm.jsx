@@ -4,7 +4,7 @@ import toast from 'react-hot-toast';
 import { useSubmitContactMessage } from '../../hooks/useContactMessages.js';
 
 const fieldClass =
-  'w-full rounded-[3px] border border-brand-line px-3.5 py-3 text-[14.5px] text-brand-ink focus:border-brand-sage focus:outline-2 focus:outline-brand-sage focus:outline-offset-1';
+  'w-full rounded-[var(--radius-button)] border border-brand-line px-3.5 py-3 text-[14.5px] text-brand-ink focus:border-brand-sage focus:outline-2 focus:outline-brand-sage focus:outline-offset-1';
 const labelClass = 'mb-2 block font-mono-brand text-[11.5px] tracking-[0.06em] text-brand-ink-soft uppercase';
 
 export default function ContactForm() {
@@ -31,7 +31,7 @@ export default function ContactForm() {
 
   if (submitted) {
     return (
-      <div className="rounded-[4px] border border-brand-line bg-white p-8 text-center">
+      <div className="rounded-[var(--radius-card)] border border-[var(--card-border)] bg-[var(--card-bg)] p-8 text-center">
         <h3 className="font-display text-xl text-brand-navy">Message Sent</h3>
         <p className="mt-2 text-sm text-brand-ink-soft">Thank you for reaching out. We'll get back to you shortly.</p>
       </div>
@@ -39,7 +39,7 @@ export default function ContactForm() {
   }
 
   return (
-    <form onSubmit={handleSubmit(onSubmit)} className="rounded-[4px] border border-brand-line bg-white p-9">
+    <form onSubmit={handleSubmit(onSubmit)} className="rounded-[var(--radius-card)] border border-[var(--card-border)] bg-[var(--card-bg)] [backdrop-filter:var(--card-blur)] p-9">
       <h3 className="font-display mb-6 text-2xl font-normal text-brand-navy">Send a Message</h3>
 
       <div className="mb-4.5">
@@ -82,7 +82,7 @@ export default function ContactForm() {
       <button
         type="submit"
         disabled={isSubmitting}
-        className="mt-5 w-full rounded-[3px] bg-brand-navy px-4 py-3.5 text-sm font-semibold text-white transition-colors hover:bg-[#0d3a63] disabled:opacity-50"
+        className="mt-5 w-full rounded-[var(--radius-button)] bg-brand-navy px-4 py-3.5 text-sm font-semibold text-white transition-colors hover:bg-[var(--color-brand-navy-hover)] disabled:opacity-50"
       >
         {isSubmitting ? 'Sending...' : 'Send Message'}
       </button>

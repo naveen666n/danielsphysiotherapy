@@ -2,7 +2,7 @@ import { getPhotoUrl } from '../../utils/photoUrl.js';
 
 export default function ServiceCard({ service }) {
   return (
-    <div className="overflow-hidden rounded-[4px] border border-brand-line bg-white transition-shadow hover:shadow-[inset_0_-3px_0_var(--color-brand-sage)]">
+    <div className="overflow-hidden border transition-shadow rounded-[var(--radius-card)] border-[var(--card-border)] bg-[var(--card-bg)] [backdrop-filter:var(--card-blur)] hover:shadow-[inset_0_-3px_0_var(--color-brand-sage)]">
       <div className="h-44 w-full bg-brand-ice">
         {service.image_url ? (
           <img src={getPhotoUrl(service.image_url)} alt={service.name} className="h-full w-full object-cover" />

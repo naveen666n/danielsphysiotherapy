@@ -2,7 +2,7 @@ import { getPhotoUrl } from '../../utils/photoUrl.js';
 
 export default function DoctorCard({ doctor }) {
   return (
-    <div className="overflow-hidden rounded-[4px] border border-brand-line bg-white transition-shadow hover:shadow-[0_18px_40px_-24px_rgba(11,46,78,0.35)]">
+    <div className="overflow-hidden border transition-shadow rounded-[var(--radius-card)] border-[var(--card-border)] bg-[var(--card-bg)] [backdrop-filter:var(--card-blur)] hover:shadow-[var(--shadow-card)]">
       <div className="aspect-4/5 bg-brand-ice">
         {doctor.photo_url ? (
           <img src={getPhotoUrl(doctor.photo_url)} alt={doctor.name} className="h-full w-full object-cover" />

@@ -4,8 +4,8 @@ import StarRating from './StarRating.jsx';
 export default function TestimonialCard({ testimonial, dark = false }) {
   return (
     <div
-      className={`rounded-[4px] p-6 ${
-        dark ? 'border border-white/14 bg-white/4' : 'border border-brand-line bg-white'
+      className={`rounded-[var(--radius-card)] p-6 ${
+        dark ? 'border border-white/14 bg-white/4' : 'border border-[var(--card-border)] bg-[var(--card-bg)] [backdrop-filter:var(--card-blur)]'
       }`}
     >
       <StarRating rating={testimonial.rating} dark={dark} />

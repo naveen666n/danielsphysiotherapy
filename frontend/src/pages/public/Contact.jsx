@@ -22,13 +22,13 @@ export default function Contact() {
             {settings?.email && <li>{settings.email}</li>}
             {settings?.opening_hours && <li>{settings.opening_hours}</li>}
           </ul>
-          <GoogleMapEmbed address={settings?.address} className="h-56 w-full rounded-[4px] border border-brand-line" />
+          <GoogleMapEmbed address={settings?.address} className="h-56 w-full rounded-[var(--radius-card)] border border-brand-line" />
           {settings?.google_map_link && (
             <a
               href={settings.google_map_link}
               target="_blank"
               rel="noreferrer"
-              className="inline-block rounded-[3px] bg-brand-navy px-6 py-2.5 text-sm font-semibold text-white transition-colors hover:bg-[#0d3a63]"
+              className="inline-block rounded-[var(--radius-button)] bg-brand-navy px-6 py-2.5 text-sm font-semibold text-white transition-colors hover:bg-[var(--color-brand-navy-hover)]"
             >
               Get Directions
             </a>
