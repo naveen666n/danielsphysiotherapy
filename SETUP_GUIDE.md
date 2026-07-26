@@ -1,3 +1,12 @@
+
+
+
+
+
+# IMP NOTE: Add ```domainname``` in .env file after successfull setup to avoid cors error
+```frontend_url=https://domainname.com,https://www.domainname.com```
+
+
 # Setup Guide
 
 This is the entry point for getting the app running locally, and for understanding how configuration (environment variables, server details, secrets) is managed across local development and production. For the one-time production server setup itself, see `docs/superpowers/deploy-runbook.md` — this guide covers local dev plus the *concepts* behind how config flows into both environments.
