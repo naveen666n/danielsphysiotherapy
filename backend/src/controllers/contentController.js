@@ -13,6 +13,6 @@ export const getPublicContent = asyncHandler(async (req, res) => {
 });
 
 export const updateContent = asyncHandler(async (req, res) => {
-  const content = await contentService.updateContent(req.body);
+  const content = await contentService.updateContent(req.body, req.file);
   sendResponse(res, { status: 200, message: 'Content updated', data: content });
 });

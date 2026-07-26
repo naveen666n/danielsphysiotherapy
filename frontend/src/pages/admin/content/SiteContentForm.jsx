@@ -1,7 +1,9 @@
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import toast from 'react-hot-toast';
 import { useContent, useUpdateContent } from '../../../hooks/useContent.js';
+import { getPhotoUrl } from '../../../utils/photoUrl.js';
+import ImageUploadField from '../../../components/admin/ImageUploadField.jsx';
 
 const SECTIONS = [
   {
@@ -96,15 +98,34 @@ export default function SiteContentForm() {
     formState: { isSubmitting },
   } = useForm({ defaultValues: DEFAULT_VALUES });
 
+  const [heroImageFile, setHeroImageFile] = useState(null);
+  const [heroImagePreview, setHeroImagePreview] = useState(null);
+
   useEffect(() => {
     if (content) {
       reset(Object.fromEntries(ALL_KEYS.map((key) => [key, content[key] ?? ''])));
+      setHeroImagePreview(getPhotoUrl(content.hero_image_url));
     }
   }, [content, reset]);
 
+  function handleHeroImageChange(file) {
+    setHeroImageFile(file);
+    setHeroImagePreview(URL.createObjectURL(file));
+  }
+
+  function handleHeroImageClear() {
+    setHeroImageFile(null);
+    setHeroImagePreview(getPhotoUrl(content?.hero_image_url) ?? null);
+  }
+
   async function onSubmit(values) {
+    const formData = new FormData();
+    Object.entries(values).forEach(([key, value]) => formData.append(key, value));
+    if (heroImageFile) formData.append('hero_image', heroImageFile);
+
     try {
-      await updateContent.mutateAsync(values);
+      await updateContent.mutateAsync(formData);
+      setHeroImageFile(null);
       toast.success('Site content updated');
     } catch (err) {
       toast.error(err.message || 'Failed to save site content.');
@@ -142,6 +163,15 @@ export default function SiteContentForm() {
                 )}
               </div>
             ))}
+            {section.title === 'Hero' && (
+              <ImageUploadField
+                label="Hero Photo"
+                preview={heroImagePreview}
+                onChange={handleHeroImageChange}
+                onClear={heroImageFile ? handleHeroImageClear : undefined}
+                hint="Shown in the homepage hero. Portrait orientation works best. JPG, PNG or WEBP, up to 5MB."
+              />
+            )}
           </fieldset>
         ))}
 

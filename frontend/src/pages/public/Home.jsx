@@ -5,6 +5,7 @@ import { usePublicDoctors } from '../../hooks/useDoctors.js';
 import { usePublicTestimonials } from '../../hooks/useTestimonials.js';
 import { usePublicSettings } from '../../hooks/useSettings.js';
 import { usePageTitle } from '../../hooks/usePageTitle.js';
+import { getPhotoUrl } from '../../utils/photoUrl.js';
 import SectionHeading from '../../components/public/SectionHeading.jsx';
 import ServiceCard from '../../components/public/ServiceCard.jsx';
 import DoctorCard from '../../components/public/DoctorCard.jsx';
@@ -105,7 +106,11 @@ export default function Home() {
 
           <div className="relative flex items-center justify-center lg:justify-end">
             <div className="relative aspect-4/5 w-full max-w-[360px] overflow-hidden rounded-[4px] border border-brand-line bg-gradient-to-br from-[#E4EEF2] to-[#D9E7EC] shadow-[0_30px_70px_-34px_rgba(11,46,78,0.4)]">
-              <img src={fallbackDoctorPhoto} alt="Dr. Chenna Daniel" className="h-full w-full object-cover" />
+              <img
+                src={content?.hero_image_url ? getPhotoUrl(content.hero_image_url) : fallbackDoctorPhoto}
+                alt="Dr. Chenna Daniel"
+                className="h-full w-full object-cover"
+              />
               <svg className="absolute top-4.5 right-4.5 opacity-90" width="46" height="30" viewBox="0 0 46 30">
                 <path d="M3 28 A20 20 0 0 1 43 28" fill="none" stroke="rgba(255,255,255,0.7)" strokeWidth="1.4" />
               </svg>
