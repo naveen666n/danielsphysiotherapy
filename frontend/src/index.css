@@ -2,18 +2,107 @@
 
 @theme {
   --color-brand-navy: #0b2e4e;
-  --color-brand-blue: #1c6e8c;
-  --color-brand-ice: #eef4f7;
-  --color-brand-sage: #4c8c6b;
+  --color-brand-blue: #6d5ae6;
+  --color-brand-ice: #ffffff;
+  --color-brand-sage: #f2994a;
   --color-brand-ink: #142430;
   --color-brand-ink-soft: #4a5c68;
-  --color-brand-line: #d7e3e9;
+  --color-brand-line: #e3e7ec;
 
-  --font-display: "Instrument Serif", Georgia, serif;
+  --font-display: "Playfair Display", Georgia, serif;
   --font-mono-brand: "IBM Plex Mono", "SF Mono", Menlo, monospace;
 }
 
-/* Scoped to the public site so the admin dashboard keeps its own type system. */
+/*
+ * "Feel" tokens (radius, shadow, card treatment, hero background, body
+ * font, hover shade) sit outside the Tailwind @theme color/font system,
+ * so they're plain CSS custom properties swapped per [data-theme].
+ * :root holds the "premium" (default) values.
+ */
+:root {
+  --font-body: "IBM Plex Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  --color-brand-navy-hover: #0d3a63;
+  --radius-card: 6px;
+  --radius-button: 4px;
+  --shadow-card: 0 30px 70px -34px rgba(11, 46, 78, 0.45);
+  --card-bg: #ffffff;
+  --card-border: #e3e7ec;
+  --card-blur: none;
+  --hero-bg: linear-gradient(135deg, rgba(11, 46, 78, 0.04), rgba(109, 90, 230, 0.06)), #ffffff;
+}
+
+[data-theme="warm"] {
+  --color-brand-navy: #c24a2c;
+  --color-brand-blue: #1f6f63;
+  --color-brand-ice: #fbf6ef;
+  --color-brand-sage: #f2a93b;
+  --color-brand-ink: #2b2320;
+  --color-brand-ink-soft: #6b5e52;
+  --color-brand-line: #e7dcc9;
+  --color-brand-navy-hover: #a93d22;
+
+  --font-display: "Fraunces", Georgia, serif;
+  --font-mono-brand: "Plus Jakarta Sans", sans-serif;
+  --font-body: "Plus Jakarta Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+
+  --radius-card: 20px;
+  --radius-button: 14px;
+  --shadow-card: 0 20px 45px -20px rgba(194, 74, 44, 0.25);
+  --card-bg: #ffffff;
+  --card-border: #e7dcc9;
+  --card-blur: none;
+  --hero-bg: radial-gradient(circle at 15% 20%, rgba(242, 169, 59, 0.25), transparent 55%),
+    radial-gradient(circle at 85% 80%, rgba(31, 111, 99, 0.18), transparent 50%), #fbf6ef;
+}
+
+[data-theme="bright"] {
+  --color-brand-navy: #0e7c74;
+  --color-brand-blue: #2d6cdf;
+  --color-brand-ice: #f5fafa;
+  --color-brand-sage: #ff6b5d;
+  --color-brand-ink: #101828;
+  --color-brand-ink-soft: #475467;
+  --color-brand-line: #dceeec;
+  --color-brand-navy-hover: #0b645e;
+
+  --font-display: "Sora", sans-serif;
+  --font-mono-brand: "Sora", sans-serif;
+  --font-body: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+
+  --radius-card: 14px;
+  --radius-button: 999px;
+  --shadow-card: 0 20px 50px -22px rgba(45, 108, 223, 0.3);
+  --card-bg: rgba(255, 255, 255, 0.65);
+  --card-border: rgba(255, 255, 255, 0.5);
+  --card-blur: blur(14px);
+  --hero-bg: radial-gradient(circle at 20% 30%, rgba(45, 108, 223, 0.16), transparent 55%),
+    radial-gradient(circle at 80% 20%, rgba(255, 107, 93, 0.14), transparent 50%),
+    radial-gradient(circle at 60% 90%, rgba(198, 241, 53, 0.14), transparent 45%), #f5fafa;
+}
+
+[data-theme="premium"] {
+  --color-brand-navy: #0b2e4e;
+  --color-brand-blue: #6d5ae6;
+  --color-brand-ice: #ffffff;
+  --color-brand-sage: #f2994a;
+  --color-brand-ink: #142430;
+  --color-brand-ink-soft: #4a5c68;
+  --color-brand-line: #e3e7ec;
+  --color-brand-navy-hover: #0d3a63;
+
+  --font-display: "Playfair Display", Georgia, serif;
+  --font-mono-brand: "IBM Plex Mono", "SF Mono", Menlo, monospace;
+  --font-body: "IBM Plex Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+
+  --radius-card: 6px;
+  --radius-button: 4px;
+  --shadow-card: 0 30px 70px -34px rgba(11, 46, 78, 0.45);
+  --card-bg: #ffffff;
+  --card-border: #e3e7ec;
+  --card-blur: none;
+  --hero-bg: linear-gradient(135deg, rgba(11, 46, 78, 0.04), rgba(109, 90, 230, 0.06)), #ffffff;
+}
+
 .public-site {
-  font-family: "IBM Plex Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  font-family: var(--font-body);
 }
