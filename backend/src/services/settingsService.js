@@ -31,6 +31,7 @@ function toFields(data, logoUrl) {
   if (data.google_map_link !== undefined) fields.google_map_link = data.google_map_link;
   if (data.opening_hours !== undefined) fields.opening_hours = data.opening_hours;
   if (data.social_links !== undefined) fields.social_links = JSON.stringify(data.social_links);
+  if (data.site_theme !== undefined) fields.site_theme = data.site_theme;
   if (logoUrl !== undefined) fields.logo_url = logoUrl;
   return fields;
 }

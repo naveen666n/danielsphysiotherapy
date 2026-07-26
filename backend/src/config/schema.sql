@@ -80,6 +80,7 @@ CREATE TABLE IF NOT EXISTS hospital_settings (
   google_map_link VARCHAR(500),
   opening_hours VARCHAR(255),
   social_links JSON,
+  site_theme VARCHAR(20) NOT NULL DEFAULT 'premium',
   logo_url VARCHAR(255),
   updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
 );

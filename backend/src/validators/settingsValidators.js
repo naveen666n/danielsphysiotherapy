@@ -17,4 +17,5 @@ export const settingsSchema = z.object({
   google_map_link: z.string().optional(),
   opening_hours: z.string().optional(),
   social_links: socialLinksFromString,
+  site_theme: z.enum(['warm', 'bright', 'premium']).optional(),
 });

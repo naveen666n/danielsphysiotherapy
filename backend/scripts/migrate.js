@@ -117,6 +117,18 @@ async function migrate() {
       console.log('Added service_id column to appointments.');
     }
 
+    const [existingThemeColumn] = await connection.query(
+      `SELECT COLUMN_NAME FROM information_schema.COLUMNS
+       WHERE TABLE_SCHEMA = ? AND TABLE_NAME = 'hospital_settings' AND COLUMN_NAME = 'site_theme'`,
+      [env.DB_NAME]
+    );
+    if (existingThemeColumn.length === 0) {
+      await connection.query(
+        "ALTER TABLE hospital_settings ADD COLUMN site_theme VARCHAR(20) NOT NULL DEFAULT 'premium' AFTER social_links"
+      );
+      console.log('Added site_theme column to hospital_settings.');
+    }
+
     await connection.query("INSERT IGNORE INTO roles (name) VALUES ('admin'), ('staff')");
     await connection.query('INSERT IGNORE INTO hospital_settings (id) VALUES (1)');
     for (const [key, value] of Object.entries(DEFAULT_CONTENT)) {
