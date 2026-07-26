@@ -166,22 +166,6 @@ export default function Home() {
         </div>
       </section>
 
-      {/* ---------- Why us / About ---------- */}
-      <section className="bg-white py-20 sm:py-24">
-        <div className="mx-auto max-w-6xl px-4 sm:px-6">
-          <SectionHeading eyebrow="About Us" title={content?.home_about_heading} subtitle={content?.home_about_body} />
-          <div className="grid grid-cols-1 gap-px overflow-hidden rounded-[var(--radius-card)] border border-brand-line bg-brand-line sm:grid-cols-2 lg:grid-cols-4">
-            {whyItems.map((item, i) => (
-              <div key={i} className="bg-white p-8">
-                <div className="flex h-13 w-13 items-center justify-center rounded-full bg-brand-ice text-brand-blue">{whyIcons[i]}</div>
-                <h3 className="mt-5 font-display text-lg font-normal text-brand-navy">{item.title}</h3>
-                <p className="mt-2 text-sm text-brand-ink-soft">{item.body}</p>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
       {/* ---------- Services ---------- */}
       <section className="border-y border-brand-line bg-brand-ice py-20 sm:py-24">
         <div className="mx-auto max-w-6xl px-4 sm:px-6">
@@ -199,6 +183,22 @@ export default function Home() {
             <Link to="/services" className={seeMoreLinkClass}>
               See all services →
             </Link>
+          </div>
+        </div>
+      </section>
+
+      {/* ---------- Why us / About ---------- */}
+      <section className="bg-white py-20 sm:py-24">
+        <div className="mx-auto max-w-6xl px-4 sm:px-6">
+          <SectionHeading eyebrow="About Us" title={content?.home_about_heading} subtitle={content?.home_about_body} />
+          <div className="grid grid-cols-1 gap-px overflow-hidden rounded-[var(--radius-card)] border border-brand-line bg-brand-line sm:grid-cols-2 lg:grid-cols-4">
+            {whyItems.map((item, i) => (
+              <div key={i} className="bg-white p-8">
+                <div className="flex h-13 w-13 items-center justify-center rounded-full bg-brand-ice text-brand-blue">{whyIcons[i]}</div>
+                <h3 className="mt-5 font-display text-lg font-normal text-brand-navy">{item.title}</h3>
+                <p className="mt-2 text-sm text-brand-ink-soft">{item.body}</p>
+              </div>
+            ))}
           </div>
         </div>
       </section>
