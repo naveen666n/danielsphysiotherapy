@@ -3,8 +3,10 @@ import { useForm } from 'react-hook-form';
 import toast from 'react-hot-toast';
 import { useSubmitContactMessage } from '../../hooks/useContactMessages.js';
 
-const fieldClass =
-  'w-full rounded-[var(--radius-button)] border border-brand-line px-3.5 py-3 text-[14.5px] text-brand-ink focus:border-brand-sage focus:outline-2 focus:outline-brand-sage focus:outline-offset-1';
+const fieldBaseClass =
+  'w-full border border-brand-line px-3.5 py-3 text-[14.5px] text-brand-ink focus:border-brand-sage focus:outline-2 focus:outline-brand-sage focus:outline-offset-1';
+const fieldClass = `${fieldBaseClass} rounded-[var(--radius-button)]`;
+const textareaClass = `${fieldBaseClass} rounded-[var(--radius-card)]`;
 const labelClass = 'mb-2 block font-mono-brand text-[11.5px] tracking-[0.06em] text-brand-ink-soft uppercase';
 
 export default function ContactForm() {
@@ -70,7 +72,7 @@ export default function ContactForm() {
         <label className={labelClass}>Message</label>
         <textarea
           rows="4"
-          className={fieldClass}
+          className={textareaClass}
           {...register('message', {
             required: 'Message is required',
             minLength: { value: 5, message: 'Message must be at least 5 characters' },

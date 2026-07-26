@@ -18,7 +18,7 @@ function formatTime12Hour(time24) {
 const today = new Date().toISOString().slice(0, 10);
 
 const fieldClass =
-  'w-full rounded-[3px] border border-brand-line px-3.5 py-3 text-[14.5px] text-brand-ink focus:border-brand-sage focus:outline-2 focus:outline-brand-sage focus:outline-offset-1';
+  'w-full rounded-[var(--radius-button)] border border-brand-line px-3.5 py-3 text-[14.5px] text-brand-ink focus:border-brand-sage focus:outline-2 focus:outline-brand-sage focus:outline-offset-1';
 const labelClass = 'mb-2 block font-mono-brand text-[11.5px] tracking-[0.06em] text-brand-ink-soft uppercase';
 
 export default function PublicBooking() {
@@ -87,7 +87,7 @@ export default function PublicBooking() {
         title="Book an Appointment"
         subtitle="Fill in your details and we'll confirm your slot shortly."
       />
-      <form onSubmit={handleSubmit(onSubmit)} className="space-y-4.5 rounded-[4px] border border-brand-line bg-white p-6 sm:p-8">
+      <form onSubmit={handleSubmit(onSubmit)} className="space-y-4.5 rounded-[var(--radius-card)] border border-[var(--card-border)] bg-[var(--card-bg)] [backdrop-filter:var(--card-blur)] p-6 sm:p-8">
         <div>
           <label className={labelClass}>Full Name</label>
           <input
@@ -180,7 +180,7 @@ export default function PublicBooking() {
         <button
           type="submit"
           disabled={isSubmitting}
-          className="w-full rounded-[3px] bg-brand-navy px-4 py-3.5 text-sm font-semibold text-white transition-colors hover:bg-[#0d3a63] disabled:opacity-50"
+          className="w-full rounded-[var(--radius-button)] bg-brand-navy px-4 py-3.5 text-sm font-semibold text-white transition-colors hover:bg-[var(--color-brand-navy-hover)] disabled:opacity-50"
         >
           {isSubmitting ? 'Booking...' : 'Book Appointment'}
         </button>

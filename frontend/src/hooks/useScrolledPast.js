@@ -7,6 +7,7 @@ export function useScrolledPast(thresholdPx) {
     function handleScroll() {
       setScrolledPast(window.scrollY > thresholdPx);
     }
+    handleScroll();
     window.addEventListener('scroll', handleScroll, { passive: true });
     return () => window.removeEventListener('scroll', handleScroll);
   }, [thresholdPx]);
