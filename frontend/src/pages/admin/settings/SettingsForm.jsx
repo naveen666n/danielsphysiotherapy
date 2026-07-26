@@ -31,7 +31,7 @@ export default function SettingsForm() {
       opening_hours: '',
       instagram: '',
       facebook: '',
-      twitter: '',
+      youtube: '',
       site_theme: 'premium',
     },
   });
@@ -51,7 +51,7 @@ export default function SettingsForm() {
         opening_hours: settings.opening_hours ?? '',
         instagram: settings.social_links?.instagram ?? '',
         facebook: settings.social_links?.facebook ?? '',
-        twitter: settings.social_links?.twitter ?? '',
+        youtube: settings.social_links?.youtube ?? '',
         site_theme: settings.site_theme ?? 'premium',
       });
       setLogoPreview(getPhotoUrl(settings.logo_url));
@@ -83,7 +83,7 @@ export default function SettingsForm() {
       JSON.stringify({
         instagram: values.instagram,
         facebook: values.facebook,
-        twitter: values.twitter,
+        youtube: values.youtube,
       })
     );
     if (logoFile) formData.append('logo', logoFile);
@@ -208,11 +208,11 @@ export default function SettingsForm() {
             />
           </div>
           <div>
-            <label className="mb-1 block text-sm font-medium text-slate-700">Twitter</label>
+            <label className="mb-1 block text-sm font-medium text-slate-700">YouTube</label>
             <input
               type="text"
               className="w-full rounded border border-slate-300 px-3 py-2 focus:border-blue-500 focus:outline-none"
-              {...register('twitter')}
+              {...register('youtube')}
             />
           </div>
         </div>

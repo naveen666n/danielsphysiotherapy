@@ -29,12 +29,12 @@ export default function PublicHeader() {
   return (
     <header className="sticky top-0 z-20 border-b border-brand-line bg-white/92 backdrop-blur">
       <div className="mx-auto flex max-w-6xl items-center justify-between gap-4 px-4 py-3 sm:px-6">
-        <Link to="/" className="flex items-center gap-4" onClick={() => setMenuOpen(false)}>
+        <Link to="/" className="flex min-w-0 flex-1 items-center gap-4" onClick={() => setMenuOpen(false)}>
           {settings?.logo_url ? (
             <img
               src={getPhotoUrl(settings.logo_url)}
               alt={settings?.hospital_name || 'Hospital logo'}
-              className="h-10 w-10 rounded-full object-cover"
+              className="h-10 w-10 shrink-0 rounded-full object-cover"
             />
           ) : (
             <svg viewBox="0 0 40 40" fill="none" className="h-9 w-9 shrink-0">
@@ -43,13 +43,13 @@ export default function PublicHeader() {
               <rect x="10" y="17" width="20" height="6" rx="1.5" style={{ fill: 'var(--color-brand-sage)' }} />
             </svg>
           )}
-          <span className="hidden h-8 w-px bg-brand-line sm:block" aria-hidden="true" />
-          <span className="font-display max-w-[150px] truncate text-xl whitespace-nowrap text-brand-navy italic sm:max-w-[260px] sm:text-2xl">
+          <span className="hidden h-8 w-px shrink-0 bg-brand-line sm:block" aria-hidden="true" />
+          <span className="font-display min-w-0 truncate text-lg text-brand-navy italic sm:text-xl">
             {settings?.hospital_name || "Daniel's Physiotherapy Hospital"}
           </span>
         </Link>
 
-        <nav className="hidden items-center gap-8 md:flex">
+        <nav className="hidden shrink-0 items-center gap-4 xl:flex">
           {navLinks.map((link) => (
             <NavLink key={link.to} to={link.to} end={link.end} className={desktopLinkClass}>
               {link.label}
@@ -57,8 +57,8 @@ export default function PublicHeader() {
           ))}
         </nav>
 
-        <div className="hidden items-center gap-4 md:flex">
-          <div className="flex items-center gap-2.5">
+        <div className="hidden shrink-0 items-center gap-2.5 xl:flex">
+          <div className="flex items-center gap-2">
             {socialPlatforms.map(
               (social) =>
                 socialLinks[social.key] && (
@@ -90,7 +90,7 @@ export default function PublicHeader() {
           </Link>
         </div>
 
-        <button type="button" className="md:hidden" aria-label="Toggle menu" onClick={() => setMenuOpen((open) => !open)}>
+        <button type="button" className="xl:hidden" aria-label="Toggle menu" onClick={() => setMenuOpen((open) => !open)}>
           <svg className="h-6 w-6 text-brand-navy" fill="none" viewBox="0 0 24 24" stroke="currentColor">
             {menuOpen ? (
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
@@ -102,7 +102,7 @@ export default function PublicHeader() {
       </div>
 
       {menuOpen && (
-        <nav className="flex flex-col gap-1 border-t border-brand-line bg-white px-4 py-3 md:hidden">
+        <nav className="flex flex-col gap-1 border-t border-brand-line bg-white px-4 py-3 xl:hidden">
           {navLinks.map((link) => (
             <NavLink key={link.to} to={link.to} end={link.end} className={mobileLinkClass} onClick={() => setMenuOpen(false)}>
               {link.label}
