@@ -5,6 +5,7 @@ import { usePublicDoctors } from '../../hooks/useDoctors.js';
 import { usePublicTestimonials } from '../../hooks/useTestimonials.js';
 import { usePublicSettings } from '../../hooks/useSettings.js';
 import { usePageTitle } from '../../hooks/usePageTitle.js';
+import { useTheme } from '../../contexts/ThemeContext.jsx';
 import { getPhotoUrl } from '../../utils/photoUrl.js';
 import SectionHeading from '../../components/public/SectionHeading.jsx';
 import ServiceCard from '../../components/public/ServiceCard.jsx';
@@ -12,6 +13,9 @@ import DoctorCard from '../../components/public/DoctorCard.jsx';
 import TestimonialCard from '../../components/public/TestimonialCard.jsx';
 import EmptyState from '../../components/public/EmptyState.jsx';
 import GoogleMapEmbed from '../../components/public/GoogleMapEmbed.jsx';
+import StatsStrip from '../../components/public/home/StatsStrip.jsx';
+import StickyBookCta from '../../components/public/home/StickyBookCta.jsx';
+import CredentialsTicker from '../../components/public/home/CredentialsTicker.jsx';
 import fallbackDoctorPhoto from '../../assets/doctor-daniel.jpg';
 
 const whyIcons = [
@@ -63,6 +67,7 @@ export default function Home() {
   const { data: doctors } = usePublicDoctors();
   const { data: testimonials } = usePublicTestimonials();
   const { data: settings } = usePublicSettings();
+  const theme = useTheme();
 
   const previewServices = (services || []).slice(0, 4);
   const previewDoctors = (doctors || []).slice(0, 3);
@@ -81,8 +86,13 @@ export default function Home() {
 
   return (
     <div>
+      {theme === 'bright' && <StickyBookCta />}
+
       {/* ---------- Hero ---------- */}
-      <section className="relative flex min-h-[calc(100vh-77px)] items-center overflow-hidden border-b border-brand-line bg-brand-ice">
+      <section
+        className="relative flex min-h-[calc(100vh-77px)] items-center overflow-hidden border-b border-brand-line"
+        style={{ backgroundImage: 'var(--hero-bg)' }}
+      >
         <div className="mx-auto grid w-full max-w-6xl grid-cols-1 items-center gap-10 px-4 py-12 sm:px-6 lg:grid-cols-[1.05fr_0.95fr]">
           <div>
             <span className="mb-4 flex items-center gap-2.5 font-mono-brand text-xs tracking-[0.14em] text-brand-blue uppercase">
@@ -92,12 +102,15 @@ export default function Home() {
             <h1 className="font-display text-[clamp(34px,4.4vw,50px)] leading-[1.08] font-normal text-brand-navy">{content?.hero_title}</h1>
             <p className="mt-4 max-w-[470px] text-[16.5px] text-brand-ink-soft">{content?.hero_subtitle}</p>
             <div className="mt-7 flex flex-wrap items-center gap-4">
-              <Link to="/book" className="rounded-[3px] bg-brand-navy px-6 py-3.5 text-sm font-semibold text-white transition-colors hover:bg-[#0d3a63]">
+              <Link
+                to="/book"
+                className="rounded-[var(--radius-button)] bg-brand-navy px-6 py-3.5 text-sm font-semibold text-white transition-colors hover:bg-[var(--color-brand-navy-hover)]"
+              >
                 Book a Consultation
               </Link>
               <Link
                 to="/services"
-                className="rounded-[3px] border border-brand-navy px-6 py-3.5 text-sm font-semibold text-brand-navy transition-colors hover:bg-brand-navy hover:text-white"
+                className="rounded-[var(--radius-button)] border border-brand-navy px-6 py-3.5 text-sm font-semibold text-brand-navy transition-colors hover:bg-brand-navy hover:text-white"
               >
                 View Services
               </Link>
@@ -105,7 +118,7 @@ export default function Home() {
           </div>
 
           <div className="relative flex items-center justify-center lg:justify-end">
-            <div className="relative aspect-4/5 w-full max-w-[360px] overflow-hidden rounded-[4px] border border-brand-line bg-gradient-to-br from-[#E4EEF2] to-[#D9E7EC] shadow-[0_30px_70px_-34px_rgba(11,46,78,0.4)]">
+            <div className="relative aspect-4/5 w-full max-w-[360px] overflow-hidden rounded-[var(--radius-card)] border border-brand-line bg-brand-ice shadow-[var(--shadow-card)]">
               <img
                 src={content?.hero_image_url ? getPhotoUrl(content.hero_image_url) : fallbackDoctorPhoto}
                 alt="Dr. Chenna Daniel"
@@ -114,15 +127,15 @@ export default function Home() {
               <svg className="absolute top-4.5 right-4.5 opacity-90" width="46" height="30" viewBox="0 0 46 30">
                 <path d="M3 28 A20 20 0 0 1 43 28" fill="none" stroke="rgba(255,255,255,0.7)" strokeWidth="1.4" />
               </svg>
-              <div className="absolute inset-x-0 bottom-0 bg-linear-to-t from-[rgba(11,46,78,0.88)] to-[rgba(11,46,78,0.05)] px-5.5 pt-5 pb-4.5">
+              <div className="absolute inset-x-0 bottom-0 bg-linear-to-t from-(--color-brand-navy)/90 to-(--color-brand-navy)/5 px-5.5 pt-5 pb-4.5">
                 <div className="font-display text-[22px] leading-[1.1] text-white italic">Dr. Chenna Daniel</div>
-                <div className="mt-1.5 font-mono-brand text-[10.5px] tracking-[0.1em] text-[#9FC7D3] uppercase">
+                <div className="mt-1.5 font-mono-brand text-[10.5px] tracking-[0.1em] text-white/70 uppercase">
                   Founder &amp; Lead Physiotherapist
                 </div>
               </div>
             </div>
 
-            <div className="absolute bottom-8 left-0 flex items-center gap-3 rounded-[4px] border border-brand-line bg-white px-4.5 py-3.5 shadow-[0_18px_40px_-20px_rgba(11,46,78,0.3)] lg:left-[-40px]">
+            <div className="absolute bottom-8 left-0 flex items-center gap-3 rounded-[var(--radius-card)] border border-brand-line bg-white px-4.5 py-3.5 shadow-[var(--shadow-card)] lg:left-[-40px]">
               <div className="flex h-8.5 w-8.5 shrink-0 items-center justify-center rounded-full bg-brand-ice">
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" className="h-4 w-4 text-brand-sage">
                   <path d="M9 12l2 2 4-4" />
@@ -137,6 +150,9 @@ export default function Home() {
           </div>
         </div>
       </section>
+
+      {theme === 'warm' && <StatsStrip />}
+      {theme === 'premium' && <CredentialsTicker />}
 
       {/* ---------- Trust strip ---------- */}
       <section className="border-b border-brand-line bg-white">
@@ -154,7 +170,7 @@ export default function Home() {
       <section className="bg-white py-20 sm:py-24">
         <div className="mx-auto max-w-6xl px-4 sm:px-6">
           <SectionHeading eyebrow="About Us" title={content?.home_about_heading} subtitle={content?.home_about_body} />
-          <div className="grid grid-cols-1 gap-px overflow-hidden rounded-[4px] border border-brand-line bg-brand-line sm:grid-cols-2 lg:grid-cols-4">
+          <div className="grid grid-cols-1 gap-px overflow-hidden rounded-[var(--radius-card)] border border-brand-line bg-brand-line sm:grid-cols-2 lg:grid-cols-4">
             {whyItems.map((item, i) => (
               <div key={i} className="bg-white p-8">
                 <div className="flex h-13 w-13 items-center justify-center rounded-full bg-brand-ice text-brand-blue">{whyIcons[i]}</div>
@@ -212,14 +228,14 @@ export default function Home() {
       <section className="bg-brand-navy py-20 text-white sm:py-24">
         <div className="mx-auto max-w-6xl px-4 sm:px-6">
           <div className="mb-12 max-w-2xl">
-            <span className="mb-4 flex items-center gap-2.5 font-mono-brand text-xs tracking-[0.14em] text-[#7FB8C9] uppercase">
-              <span className="h-px w-7 bg-[#7FB8C9]" aria-hidden="true" />
+            <span className="mb-4 flex items-center gap-2.5 font-mono-brand text-xs tracking-[0.14em] text-white/60 uppercase">
+              <span className="h-px w-7 bg-white/60" aria-hidden="true" />
               Patient Stories
             </span>
             <h2 className="font-display text-3xl leading-[1.15] font-normal text-white sm:text-4xl">{content?.home_testimonials_heading}</h2>
           </div>
           {previewTestimonials.length === 0 ? (
-            <div className="rounded-[4px] border border-dashed border-white/20 bg-white/4 px-6 py-14 text-center">
+            <div className="rounded-[var(--radius-card)] border border-dashed border-white/20 bg-white/4 px-6 py-14 text-center">
               <p className="text-white/60">Patient testimonials coming soon — check back shortly.</p>
             </div>
           ) : (
@@ -241,12 +257,15 @@ export default function Home() {
             subtitle="A structured process from first visit to full function — because guesswork has no place in rehabilitation."
             align="left"
           />
-          <div className="flex flex-col">
+          <div className="relative flex flex-col">
+            {theme === 'premium' && (
+              <div className="absolute top-0 bottom-0 left-[27px] w-px bg-brand-blue sm:left-[44px]" aria-hidden="true" />
+            )}
             {processSteps.map((step, i) => (
               <div key={step.title} className="grid grid-cols-[56px_1fr] gap-6 border-t border-brand-line py-7 last:border-b sm:grid-cols-[90px_1fr] sm:gap-7">
                 <div className="font-mono-brand text-[13px] text-brand-sage">
                   <svg width="34" height="22" viewBox="0 0 34 22" className="mb-2">
-                    <path d="M2 20 A15 15 0 0 1 32 20" fill="none" stroke="#4C8C6B" strokeWidth="1.6" />
+                    <path d="M2 20 A15 15 0 0 1 32 20" fill="none" style={{ stroke: 'var(--color-brand-sage)' }} strokeWidth="1.6" />
                   </svg>
                   {String(i + 1).padStart(2, '0')}
                 </div>
@@ -264,8 +283,8 @@ export default function Home() {
       <section className="bg-brand-ice py-20 sm:py-24">
         <div className="mx-auto max-w-6xl px-4 sm:px-6">
           <SectionHeading eyebrow="Get In Touch" title={content?.home_contact_heading} align="left" />
-          <GoogleMapEmbed address={settings?.address} className="mb-6 h-64 w-full rounded-[4px] border border-brand-line" />
-          <div className="grid grid-cols-1 gap-6 rounded-[4px] border border-brand-line bg-white p-8 sm:grid-cols-2">
+          <GoogleMapEmbed address={settings?.address} className="mb-6 h-64 w-full rounded-[var(--radius-card)] border border-brand-line" />
+          <div className="grid grid-cols-1 gap-6 rounded-[var(--radius-card)] border border-brand-line bg-white p-8 sm:grid-cols-2">
             <div className="space-y-2 text-brand-ink-soft">
               {settings?.address && <p>{settings.address}</p>}
               {settings?.phone && <p>{settings.phone}</p>}
@@ -277,14 +296,14 @@ export default function Home() {
                   href={settings.google_map_link}
                   target="_blank"
                   rel="noreferrer"
-                  className="rounded-[3px] bg-brand-navy px-6 py-2.5 text-sm font-semibold text-white transition-colors hover:bg-[#0d3a63]"
+                  className="rounded-[var(--radius-button)] bg-brand-navy px-6 py-2.5 text-sm font-semibold text-white transition-colors hover:bg-[var(--color-brand-navy-hover)]"
                 >
                   Get Directions
                 </a>
               )}
               <Link
                 to="/contact"
-                className="rounded-[3px] border border-brand-navy px-6 py-2.5 text-sm font-semibold text-brand-navy transition-colors hover:bg-brand-navy hover:text-white"
+                className="rounded-[var(--radius-button)] border border-brand-navy px-6 py-2.5 text-sm font-semibold text-brand-navy transition-colors hover:bg-brand-navy hover:text-white"
               >
                 Contact Us
               </Link>
