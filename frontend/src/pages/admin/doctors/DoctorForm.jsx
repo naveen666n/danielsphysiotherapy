@@ -4,6 +4,7 @@ import { useNavigate, useParams } from 'react-router-dom';
 import toast from 'react-hot-toast';
 import { useDoctor, useCreateDoctor, useUpdateDoctor } from '../../../hooks/useDoctors.js';
 import { getPhotoUrl } from '../../../utils/photoUrl.js';
+import ImageUploadField from '../../../components/admin/ImageUploadField.jsx';
 
 const DAYS = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'];
 
@@ -56,12 +57,14 @@ export default function DoctorForm() {
     setSelectedDays((prev) => (prev.includes(day) ? prev.filter((d) => d !== day) : [...prev, day]));
   }
 
-  function handlePhotoChange(e) {
-    const file = e.target.files?.[0];
-    if (file) {
-      setPhotoFile(file);
-      setPhotoPreview(URL.createObjectURL(file));
-    }
+  function handlePhotoChange(file) {
+    setPhotoFile(file);
+    setPhotoPreview(URL.createObjectURL(file));
+  }
+
+  function handlePhotoClear() {
+    setPhotoFile(null);
+    setPhotoPreview(getPhotoUrl(doctor?.photo_url) ?? null);
   }
 
   async function onSubmit(values) {
@@ -171,13 +174,13 @@ export default function DoctorForm() {
           />
         </div>
 
-        <div>
-          <label className="mb-1 block text-sm font-medium text-slate-700">Photo</label>
-          <input type="file" accept="image/jpeg,image/png,image/webp" onChange={handlePhotoChange} />
-          {photoPreview && (
-            <img src={photoPreview} alt="Doctor preview" className="mt-2 h-24 w-24 rounded object-cover" />
-          )}
-        </div>
+        <ImageUploadField
+          label="Photo"
+          preview={photoPreview}
+          onChange={handlePhotoChange}
+          onClear={photoFile ? handlePhotoClear : undefined}
+          hint="A clear, professional headshot works best. JPG, PNG or WEBP, up to 5MB."
+        />
 
         <div>
           <label className="flex items-center gap-2 text-sm text-slate-700">

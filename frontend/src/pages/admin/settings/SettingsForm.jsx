@@ -3,6 +3,7 @@ import { useForm } from 'react-hook-form';
 import toast from 'react-hot-toast';
 import { useSettings, useUpdateSettings } from '../../../hooks/useSettings.js';
 import { getPhotoUrl } from '../../../utils/photoUrl.js';
+import ImageUploadField from '../../../components/admin/ImageUploadField.jsx';
 
 export default function SettingsForm() {
   const { data: settings, isLoading } = useSettings();
@@ -47,12 +48,14 @@ export default function SettingsForm() {
     }
   }, [settings, reset]);
 
-  function handleLogoChange(e) {
-    const file = e.target.files?.[0];
-    if (file) {
-      setLogoFile(file);
-      setLogoPreview(URL.createObjectURL(file));
-    }
+  function handleLogoChange(file) {
+    setLogoFile(file);
+    setLogoPreview(URL.createObjectURL(file));
+  }
+
+  function handleLogoClear() {
+    setLogoFile(null);
+    setLogoPreview(getPhotoUrl(settings?.logo_url) ?? null);
   }
 
   async function onSubmit(values) {
@@ -175,13 +178,13 @@ export default function SettingsForm() {
           </div>
         </div>
 
-        <div>
-          <label className="mb-1 block text-sm font-medium text-slate-700">Logo</label>
-          <input type="file" accept="image/jpeg,image/png,image/webp" onChange={handleLogoChange} />
-          {logoPreview && (
-            <img src={logoPreview} alt="Logo preview" className="mt-2 h-16 w-16 rounded object-cover" />
-          )}
-        </div>
+        <ImageUploadField
+          label="Logo"
+          preview={logoPreview}
+          onChange={handleLogoChange}
+          onClear={logoFile ? handleLogoClear : undefined}
+          hint="Square logo works best. JPG, PNG or WEBP, up to 5MB."
+        />
 
         <div className="pt-2">
           <button

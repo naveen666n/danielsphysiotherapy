@@ -4,6 +4,7 @@ import { useNavigate, useParams } from 'react-router-dom';
 import toast from 'react-hot-toast';
 import { useService, useCreateService, useUpdateService } from '../../../hooks/useServices.js';
 import { getPhotoUrl } from '../../../utils/photoUrl.js';
+import ImageUploadField from '../../../components/admin/ImageUploadField.jsx';
 
 export default function ServiceForm() {
   const { id } = useParams();
@@ -40,12 +41,14 @@ export default function ServiceForm() {
     }
   }, [service, reset]);
 
-  function handlePhotoChange(e) {
-    const file = e.target.files?.[0];
-    if (file) {
-      setPhotoFile(file);
-      setPhotoPreview(URL.createObjectURL(file));
-    }
+  function handlePhotoChange(file) {
+    setPhotoFile(file);
+    setPhotoPreview(URL.createObjectURL(file));
+  }
+
+  function handlePhotoClear() {
+    setPhotoFile(null);
+    setPhotoPreview(getPhotoUrl(service?.image_url) ?? null);
   }
 
   async function onSubmit(values) {
@@ -106,13 +109,13 @@ export default function ServiceForm() {
           />
         </div>
 
-        <div>
-          <label className="mb-1 block text-sm font-medium text-slate-700">Photo</label>
-          <input type="file" accept="image/jpeg,image/png,image/webp" onChange={handlePhotoChange} />
-          {photoPreview && (
-            <img src={photoPreview} alt="Service preview" className="mt-2 h-24 w-24 rounded object-cover" />
-          )}
-        </div>
+        <ImageUploadField
+          label="Photo"
+          preview={photoPreview}
+          onChange={handlePhotoChange}
+          onClear={photoFile ? handlePhotoClear : undefined}
+          hint="JPG, PNG or WEBP, up to 5MB."
+        />
 
         <div className="flex gap-3 pt-2">
           <button
