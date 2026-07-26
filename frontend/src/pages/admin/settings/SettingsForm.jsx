@@ -5,6 +5,12 @@ import { useSettings, useUpdateSettings } from '../../../hooks/useSettings.js';
 import { getPhotoUrl } from '../../../utils/photoUrl.js';
 import ImageUploadField from '../../../components/admin/ImageUploadField.jsx';
 
+function extractMapEmbedSrc(value) {
+  const trimmed = value.trim();
+  const iframeMatch = trimmed.match(/<iframe[^>]*\ssrc="([^"]+)"/i);
+  return iframeMatch ? iframeMatch[1] : trimmed;
+}
+
 export default function SettingsForm() {
   const { data: settings, isLoading } = useSettings();
   const updateSettings = useUpdateSettings();
@@ -21,6 +27,7 @@ export default function SettingsForm() {
       phone: '',
       email: '',
       google_map_link: '',
+      map_embed_url: '',
       opening_hours: '',
       instagram: '',
       facebook: '',
@@ -40,6 +47,7 @@ export default function SettingsForm() {
         phone: settings.phone ?? '',
         email: settings.email ?? '',
         google_map_link: settings.google_map_link ?? '',
+        map_embed_url: settings.map_embed_url ?? '',
         opening_hours: settings.opening_hours ?? '',
         instagram: settings.social_links?.instagram ?? '',
         facebook: settings.social_links?.facebook ?? '',
@@ -67,6 +75,7 @@ export default function SettingsForm() {
     formData.append('phone', values.phone);
     if (values.email) formData.append('email', values.email);
     formData.append('google_map_link', values.google_map_link);
+    formData.append('map_embed_url', values.map_embed_url ? extractMapEmbedSrc(values.map_embed_url) : '');
     formData.append('opening_hours', values.opening_hours);
     formData.append('site_theme', values.site_theme);
     formData.append(
@@ -142,6 +151,20 @@ export default function SettingsForm() {
             className="w-full rounded border border-slate-300 px-3 py-2 focus:border-blue-500 focus:outline-none"
             {...register('google_map_link')}
           />
+        </div>
+
+        <div>
+          <label className="mb-1 block text-sm font-medium text-slate-700">Google Map Embed</label>
+          <textarea
+            rows="3"
+            placeholder='Paste the Google Maps "Embed a map" <iframe> code, or just its src URL'
+            className="w-full rounded border border-slate-300 px-3 py-2 focus:border-blue-500 focus:outline-none"
+            {...register('map_embed_url')}
+          />
+          <p className="mt-1 text-xs text-slate-500">
+            In Google Maps, open the location → Share → Embed a map → Copy HTML, and paste it here. This controls the map preview
+            shown on the site (separate from the "Get Directions" link above).
+          </p>
         </div>
 
         <div>

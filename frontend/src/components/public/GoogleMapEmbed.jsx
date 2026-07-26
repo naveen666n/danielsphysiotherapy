@@ -1,7 +1,7 @@
-export default function GoogleMapEmbed({ address, className = 'h-64 w-full rounded-[var(--radius-card)] border border-brand-line' }) {
-  if (!address) return null;
+export default function GoogleMapEmbed({ address, embedUrl, className = 'h-64 w-full rounded-[var(--radius-card)] border border-brand-line' }) {
+  if (!embedUrl && !address) return null;
 
-  const src = `https://www.google.com/maps?q=${encodeURIComponent(address)}&output=embed`;
+  const src = embedUrl || `https://www.google.com/maps?q=${encodeURIComponent(address)}&output=embed`;
 
   return (
     <iframe

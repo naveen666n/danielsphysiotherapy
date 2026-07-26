@@ -15,6 +15,7 @@ export const settingsSchema = z.object({
   phone: z.string().optional(),
   email: z.string().email().optional(),
   google_map_link: z.string().optional(),
+  map_embed_url: z.string().optional(),
   opening_hours: z.string().optional(),
   social_links: socialLinksFromString,
   site_theme: z.enum(['warm', 'bright', 'premium']).optional(),

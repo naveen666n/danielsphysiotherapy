@@ -29,6 +29,7 @@ function toFields(data, logoUrl) {
   if (data.phone !== undefined) fields.phone = data.phone;
   if (data.email !== undefined) fields.email = data.email;
   if (data.google_map_link !== undefined) fields.google_map_link = data.google_map_link;
+  if (data.map_embed_url !== undefined) fields.map_embed_url = data.map_embed_url;
   if (data.opening_hours !== undefined) fields.opening_hours = data.opening_hours;
   if (data.social_links !== undefined) fields.social_links = JSON.stringify(data.social_links);
   if (data.site_theme !== undefined) fields.site_theme = data.site_theme;

@@ -22,7 +22,11 @@ export default function Contact() {
             {settings?.email && <li>{settings.email}</li>}
             {settings?.opening_hours && <li>{settings.opening_hours}</li>}
           </ul>
-          <GoogleMapEmbed address={settings?.address} className="h-56 w-full rounded-[var(--radius-card)] border border-brand-line" />
+          <GoogleMapEmbed
+            address={settings?.address}
+            embedUrl={settings?.map_embed_url}
+            className="h-56 w-full rounded-[var(--radius-card)] border border-brand-line"
+          />
           {settings?.google_map_link && (
             <a
               href={settings.google_map_link}

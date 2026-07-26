@@ -129,6 +129,16 @@ async function migrate() {
       console.log('Added site_theme column to hospital_settings.');
     }
 
+    const [existingMapEmbedColumn] = await connection.query(
+      `SELECT COLUMN_NAME FROM information_schema.COLUMNS
+       WHERE TABLE_SCHEMA = ? AND TABLE_NAME = 'hospital_settings' AND COLUMN_NAME = 'map_embed_url'`,
+      [env.DB_NAME]
+    );
+    if (existingMapEmbedColumn.length === 0) {
+      await connection.query('ALTER TABLE hospital_settings ADD COLUMN map_embed_url VARCHAR(1000) AFTER google_map_link');
+      console.log('Added map_embed_url column to hospital_settings.');
+    }
+
     await connection.query("INSERT IGNORE INTO roles (name) VALUES ('admin'), ('staff')");
     await connection.query('INSERT IGNORE INTO hospital_settings (id) VALUES (1)');
     for (const [key, value] of Object.entries(DEFAULT_CONTENT)) {

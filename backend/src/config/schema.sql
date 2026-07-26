@@ -78,6 +78,7 @@ CREATE TABLE IF NOT EXISTS hospital_settings (
   phone VARCHAR(20),
   email VARCHAR(150),
   google_map_link VARCHAR(500),
+  map_embed_url VARCHAR(1000),
   opening_hours VARCHAR(255),
   social_links JSON,
   site_theme VARCHAR(20) NOT NULL DEFAULT 'premium',

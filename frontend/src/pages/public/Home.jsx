@@ -283,7 +283,11 @@ export default function Home() {
       <section className="bg-brand-ice py-20 sm:py-24">
         <div className="mx-auto max-w-6xl px-4 sm:px-6">
           <SectionHeading eyebrow="Get In Touch" title={content?.home_contact_heading} align="left" />
-          <GoogleMapEmbed address={settings?.address} className="mb-6 h-64 w-full rounded-[var(--radius-card)] border border-brand-line" />
+          <GoogleMapEmbed
+            address={settings?.address}
+            embedUrl={settings?.map_embed_url}
+            className="mb-6 h-64 w-full rounded-[var(--radius-card)] border border-brand-line"
+          />
           <div className="grid grid-cols-1 gap-6 rounded-[var(--radius-card)] border border-brand-line bg-white p-8 sm:grid-cols-2">
             <div className="space-y-2 text-brand-ink-soft">
               {settings?.address && <p>{settings.address}</p>}
