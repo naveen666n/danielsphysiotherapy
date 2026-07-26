@@ -5,7 +5,6 @@ import { usePublicDoctors } from '../../hooks/useDoctors.js';
 import { usePublicTestimonials } from '../../hooks/useTestimonials.js';
 import { usePublicSettings } from '../../hooks/useSettings.js';
 import { usePageTitle } from '../../hooks/usePageTitle.js';
-import { getPhotoUrl } from '../../utils/photoUrl.js';
 import SectionHeading from '../../components/public/SectionHeading.jsx';
 import ServiceCard from '../../components/public/ServiceCard.jsx';
 import DoctorCard from '../../components/public/DoctorCard.jsx';
@@ -67,7 +66,6 @@ export default function Home() {
   const previewServices = (services || []).slice(0, 4);
   const previewDoctors = (doctors || []).slice(0, 3);
   const previewTestimonials = (testimonials || []).slice(0, 3);
-  const featuredDoctor = previewDoctors[0];
 
   const whyItems = content
     ? [
@@ -107,38 +105,30 @@ export default function Home() {
 
           <div className="relative flex items-center justify-center lg:justify-end">
             <div className="relative aspect-4/5 w-full max-w-[360px] overflow-hidden rounded-[4px] border border-brand-line bg-gradient-to-br from-[#E4EEF2] to-[#D9E7EC] shadow-[0_30px_70px_-34px_rgba(11,46,78,0.4)]">
-              <img
-                src={featuredDoctor?.photo_url ? getPhotoUrl(featuredDoctor.photo_url) : fallbackDoctorPhoto}
-                alt={featuredDoctor?.name || 'Dr. Chenna Daniel'}
-                className="h-full w-full object-cover"
-              />
+              <img src={fallbackDoctorPhoto} alt="Dr. Chenna Daniel" className="h-full w-full object-cover" />
               <svg className="absolute top-4.5 right-4.5 opacity-90" width="46" height="30" viewBox="0 0 46 30">
                 <path d="M3 28 A20 20 0 0 1 43 28" fill="none" stroke="rgba(255,255,255,0.7)" strokeWidth="1.4" />
               </svg>
               <div className="absolute inset-x-0 bottom-0 bg-linear-to-t from-[rgba(11,46,78,0.88)] to-[rgba(11,46,78,0.05)] px-5.5 pt-5 pb-4.5">
-                <div className="font-display text-[22px] leading-[1.1] text-white italic">{featuredDoctor?.name || 'Dr. Chenna Daniel'}</div>
+                <div className="font-display text-[22px] leading-[1.1] text-white italic">Dr. Chenna Daniel</div>
                 <div className="mt-1.5 font-mono-brand text-[10.5px] tracking-[0.1em] text-[#9FC7D3] uppercase">
-                  {featuredDoctor?.specialization || 'Founder & Lead Physiotherapist'}
+                  Founder &amp; Lead Physiotherapist
                 </div>
               </div>
             </div>
 
-            {(featuredDoctor?.experience_years != null || !featuredDoctor) && (
-              <div className="absolute bottom-8 left-0 flex items-center gap-3 rounded-[4px] border border-brand-line bg-white px-4.5 py-3.5 shadow-[0_18px_40px_-20px_rgba(11,46,78,0.3)] lg:left-[-40px]">
-                <div className="flex h-8.5 w-8.5 shrink-0 items-center justify-center rounded-full bg-brand-ice">
-                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" className="h-4 w-4 text-brand-sage">
-                    <path d="M9 12l2 2 4-4" />
-                    <circle cx="12" cy="12" r="9" />
-                  </svg>
-                </div>
-                <div>
-                  <div className="font-display text-[19px] leading-none text-brand-navy">
-                    {featuredDoctor?.experience_years != null ? `${featuredDoctor.experience_years}+ yrs` : '10+ yrs'}
-                  </div>
-                  <div className="mt-1 font-mono-brand text-[9.5px] tracking-[0.05em] text-brand-ink-soft uppercase">Certified &amp; Trusted</div>
-                </div>
+            <div className="absolute bottom-8 left-0 flex items-center gap-3 rounded-[4px] border border-brand-line bg-white px-4.5 py-3.5 shadow-[0_18px_40px_-20px_rgba(11,46,78,0.3)] lg:left-[-40px]">
+              <div className="flex h-8.5 w-8.5 shrink-0 items-center justify-center rounded-full bg-brand-ice">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" className="h-4 w-4 text-brand-sage">
+                  <path d="M9 12l2 2 4-4" />
+                  <circle cx="12" cy="12" r="9" />
+                </svg>
               </div>
-            )}
+              <div>
+                <div className="font-display text-[19px] leading-none text-brand-navy">10+ yrs</div>
+                <div className="mt-1 font-mono-brand text-[9.5px] tracking-[0.05em] text-brand-ink-soft uppercase">Certified &amp; Trusted</div>
+              </div>
+            </div>
           </div>
         </div>
       </section>
