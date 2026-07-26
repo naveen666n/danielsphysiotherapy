@@ -1,4 +1,5 @@
 import multer from 'multer';
+import fs from 'node:fs';
 import path from 'node:path';
 import crypto from 'node:crypto';
 import { fileURLToPath } from 'node:url';
@@ -16,6 +17,7 @@ const MIME_EXTENSIONS = {
 
 export function makeUploadMiddleware(subdir, fieldName) {
   const uploadDir = path.join(UPLOADS_ROOT, subdir);
+  fs.mkdirSync(uploadDir, { recursive: true });
 
   const storage = multer.diskStorage({
     destination: (req, file, cb) => cb(null, uploadDir),
