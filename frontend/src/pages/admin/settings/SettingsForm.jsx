@@ -25,6 +25,7 @@ export default function SettingsForm() {
       instagram: '',
       facebook: '',
       twitter: '',
+      site_theme: 'premium',
     },
   });
 
@@ -43,6 +44,7 @@ export default function SettingsForm() {
         instagram: settings.social_links?.instagram ?? '',
         facebook: settings.social_links?.facebook ?? '',
         twitter: settings.social_links?.twitter ?? '',
+        site_theme: settings.site_theme ?? 'premium',
       });
       setLogoPreview(getPhotoUrl(settings.logo_url));
     }
@@ -66,6 +68,7 @@ export default function SettingsForm() {
     if (values.email) formData.append('email', values.email);
     formData.append('google_map_link', values.google_map_link);
     formData.append('opening_hours', values.opening_hours);
+    formData.append('site_theme', values.site_theme);
     formData.append(
       'social_links',
       JSON.stringify({
@@ -149,6 +152,19 @@ export default function SettingsForm() {
             className="w-full rounded border border-slate-300 px-3 py-2 focus:border-blue-500 focus:outline-none"
             {...register('opening_hours')}
           />
+        </div>
+
+        <div>
+          <label className="mb-1 block text-sm font-medium text-slate-700">Site Theme</label>
+          <select
+            className="w-full rounded border border-slate-300 px-3 py-2 focus:border-blue-500 focus:outline-none"
+            {...register('site_theme')}
+          >
+            <option value="warm">Warm Recovery</option>
+            <option value="bright">Bright Health-Tech</option>
+            <option value="premium">Premium Calm</option>
+          </select>
+          <p className="mt-1 text-xs text-slate-500">Controls the color palette, fonts, and visual style of the public website.</p>
         </div>
 
         <div className="grid grid-cols-3 gap-4">
