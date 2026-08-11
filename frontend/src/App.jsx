@@ -14,6 +14,7 @@ import AdminHome from './pages/admin/AdminHome.jsx';
 import DoctorList from './pages/admin/doctors/DoctorList.jsx';
 import DoctorForm from './pages/admin/doctors/DoctorForm.jsx';
 import AppointmentList from './pages/admin/appointments/AppointmentList.jsx';
+import VideoConsultationList from './pages/admin/videoConsultations/VideoConsultationList.jsx';
 import StaffList from './pages/admin/staff/StaffList.jsx';
 import StaffForm from './pages/admin/staff/StaffForm.jsx';
 import ServiceList from './pages/admin/services/ServiceList.jsx';
@@ -43,6 +44,7 @@ export default function App() {
           <Route index element={<AdminHome />} />
           <Route path="doctors" element={<DoctorList />} />
           <Route path="appointments" element={<AppointmentList />} />
+          <Route path="video-consultations" element={<VideoConsultationList />} />
           <Route path="services" element={<ServiceList />} />
           <Route path="testimonials" element={<TestimonialList />} />
           <Route path="messages" element={<ContactMessageList />} />

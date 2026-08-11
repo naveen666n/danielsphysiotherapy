@@ -45,6 +45,9 @@ export default function AdminLayout() {
             <NavLink to="/admin/appointments" className={navLinkClass}>
               Appointments
             </NavLink>
+            <NavLink to="/admin/video-consultations" className={navLinkClass}>
+              Video Consultations
+            </NavLink>
             <NavLink to="/admin/services" className={navLinkClass}>
               Services
             </NavLink>
