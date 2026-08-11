@@ -31,3 +31,11 @@ export const contactLimiter = rateLimit({
   legacyHeaders: false,
   message: { success: false, message: 'Too many messages sent. Please wait and try again.', errors: null },
 });
+
+export const videoConsultationLimiter = rateLimit({
+  windowMs: 15 * 60 * 1000,
+  max: 5,
+  standardHeaders: true,
+  legacyHeaders: false,
+  message: { success: false, message: 'Too many attempts. Please wait and try again.', errors: null },
+});

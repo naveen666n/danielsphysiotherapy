@@ -9,6 +9,7 @@ import settingsRoutes from './settingsRoutes.js';
 import contentRoutes from './contentRoutes.js';
 import contactMessageRoutes from './contactMessageRoutes.js';
 import dashboardRoutes from './dashboardRoutes.js';
+import videoConsultationRoutes from './videoConsultationRoutes.js';
 import * as contactMessageController from '../controllers/contactMessageController.js';
 import { validate } from '../middlewares/validate.js';
 import { contactMessageSchema } from '../validators/contactMessageValidators.js';
@@ -31,5 +32,6 @@ router.use('/content', contentRoutes);
 router.post('/contact', contactLimiter, validate(contactMessageSchema), contactMessageController.create);
 router.use('/contact-messages', contactMessageRoutes);
 router.use('/dashboard', dashboardRoutes);
+router.use('/video-consultations', videoConsultationRoutes);
 
 export default router;
