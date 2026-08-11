@@ -22,10 +22,16 @@ export async function createOrder({ payableType, payableId, amount, currency = '
   return { paymentId, gatewayOrderId: order.gatewayOrderId, amount, currency: order.currency, keyId };
 }
 
-export async function verifyAndCapture({ gatewayOrderId, gatewayPaymentId, signature }) {
+export async function verifyAndCapture({ gatewayOrderId, gatewayPaymentId, signature, payableType, payableId }) {
   const payment = await paymentRepository.findByGatewayOrderId(gatewayOrderId);
   if (!payment) {
     throw new AppError('Payment order not found.', 404);
+  }
+  if (payment.payable_type !== payableType || payment.payable_id !== Number(payableId)) {
+    throw new AppError('Payment does not belong to this order.', 400);
+  }
+  if (payment.status === 'paid') {
+    throw new AppError('This payment was already captured.', 409);
   }
 
   const gateway = getGateway();

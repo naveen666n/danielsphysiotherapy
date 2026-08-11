@@ -61,10 +61,19 @@ export async function createOrder(data) {
 
 export async function verifyPayment(id, { gatewayOrderId, gatewayPaymentId, signature }) {
   const consultation = await getConsultation(id);
+  if (consultation.status === 'paid') {
+    throw new AppError('This consultation has already been paid for.', 409);
+  }
   const doctor = await doctorRepository.findById(consultation.doctor_id);
 
   try {
-    await paymentService.verifyAndCapture({ gatewayOrderId, gatewayPaymentId, signature });
+    await paymentService.verifyAndCapture({
+      gatewayOrderId,
+      gatewayPaymentId,
+      signature,
+      payableType: 'video_consultation',
+      payableId: id,
+    });
   } catch (err) {
     await videoConsultationRepository.update(id, { status: 'failed' });
     throw err;
