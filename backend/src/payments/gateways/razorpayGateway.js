@@ -4,9 +4,11 @@ import env from '../../config/env.js';
 import { PaymentGateway } from './PaymentGateway.js';
 
 class RazorpayGateway extends PaymentGateway {
-  constructor() {
-    super();
-    this.client = new Razorpay({ key_id: env.RAZORPAY_KEY_ID, key_secret: env.RAZORPAY_KEY_SECRET });
+  get client() {
+    if (!this._client) {
+      this._client = new Razorpay({ key_id: env.RAZORPAY_KEY_ID, key_secret: env.RAZORPAY_KEY_SECRET });
+    }
+    return this._client;
   }
 
   async createOrder({ amount, currency = 'INR', receipt, notes }) {
