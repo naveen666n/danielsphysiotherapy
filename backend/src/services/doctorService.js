@@ -31,6 +31,8 @@ function toRow(data, photoUrl) {
     experience_years: data.experience_years ?? null,
     photo_url: photoUrl,
     consultation_fee: data.consultation_fee ?? null,
+    video_consultation_fee: data.video_consultation_fee ?? null,
+    video_consultation_zoom_link: data.video_consultation_zoom_link ?? null,
     working_days: data.working_days ?? null,
     available_time: data.available_time ?? null,
     active: data.active ?? true,
@@ -42,7 +44,8 @@ export async function listDoctors() {
 }
 
 export async function listPublicDoctors() {
-  return doctorRepository.findActiveOnly();
+  const doctors = await doctorRepository.findActiveOnly();
+  return doctors.map(({ video_consultation_zoom_link, ...rest }) => rest);
 }
 
 export async function getDoctor(id) {

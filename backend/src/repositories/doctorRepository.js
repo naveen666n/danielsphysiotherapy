@@ -18,9 +18,9 @@ export async function findById(id) {
 export async function create(doctor) {
   const [result] = await pool.query(
     `INSERT INTO doctors
-      (name, qualification, specialization, experience_years, photo_url, consultation_fee, working_days, available_time, active)
+      (name, qualification, specialization, experience_years, photo_url, consultation_fee, video_consultation_fee, video_consultation_zoom_link, working_days, available_time, active)
      VALUES
-      (:name, :qualification, :specialization, :experience_years, :photo_url, :consultation_fee, :working_days, :available_time, :active)`,
+      (:name, :qualification, :specialization, :experience_years, :photo_url, :consultation_fee, :video_consultation_fee, :video_consultation_zoom_link, :working_days, :available_time, :active)`,
     doctor
   );
   return result.insertId;
@@ -35,6 +35,8 @@ export async function update(id, doctor) {
       experience_years = :experience_years,
       photo_url = :photo_url,
       consultation_fee = :consultation_fee,
+      video_consultation_fee = :video_consultation_fee,
+      video_consultation_zoom_link = :video_consultation_zoom_link,
       working_days = :working_days,
       available_time = :available_time,
       active = :active

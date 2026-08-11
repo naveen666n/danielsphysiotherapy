@@ -13,6 +13,8 @@ export const doctorSchema = z.object({
   specialization: z.string().optional(),
   experience_years: z.coerce.number().int().min(0).optional(),
   consultation_fee: z.coerce.number().min(0).optional(),
+  video_consultation_fee: z.coerce.number().min(0).optional(),
+  video_consultation_zoom_link: z.string().url('Enter a valid URL').optional(),
   working_days: z.string().optional(),
   available_time: z.string().optional(),
   active: booleanFromString,
