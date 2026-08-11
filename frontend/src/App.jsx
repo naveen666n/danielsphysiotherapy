@@ -2,6 +2,7 @@ import { Routes, Route } from 'react-router-dom';
 import Login from './pages/Login.jsx';
 import NotFound from './pages/NotFound.jsx';
 import PublicBooking from './pages/PublicBooking.jsx';
+import PublicVideoConsultation from './pages/PublicVideoConsultation.jsx';
 import AdminLayout from './layouts/AdminLayout.jsx';
 import PublicLayout from './layouts/PublicLayout.jsx';
 import Home from './pages/public/Home.jsx';
@@ -34,6 +35,7 @@ export default function App() {
         <Route path="/testimonials" element={<Testimonials />} />
         <Route path="/contact" element={<Contact />} />
         <Route path="/book" element={<PublicBooking />} />
+        <Route path="/video-consultation" element={<PublicVideoConsultation />} />
       </Route>
       <Route path="/login" element={<Login />} />
       <Route element={<ProtectedRoute />}>
