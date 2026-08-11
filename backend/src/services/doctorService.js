@@ -45,7 +45,10 @@ export async function listDoctors() {
 
 export async function listPublicDoctors() {
   const doctors = await doctorRepository.findActiveOnly();
-  return doctors.map(({ video_consultation_zoom_link, ...rest }) => rest);
+  return doctors.map(({ video_consultation_zoom_link, ...rest }) => ({
+    ...rest,
+    offers_video_consultation: Boolean(video_consultation_zoom_link && rest.video_consultation_fee),
+  }));
 }
 
 export async function getDoctor(id) {

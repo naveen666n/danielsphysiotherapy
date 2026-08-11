@@ -24,7 +24,7 @@ const labelClass = 'mb-2 block font-mono-brand text-[11.5px] tracking-[0.06em] t
 export default function PublicVideoConsultation() {
   usePageTitle('Video Consultation');
   const { data: doctors } = usePublicDoctors();
-  const videoDoctors = doctors?.filter((doctor) => doctor.video_consultation_fee != null) ?? [];
+  const videoDoctors = doctors?.filter((doctor) => doctor.offers_video_consultation) ?? [];
   const createOrder = useCreateVideoConsultationOrder();
   const verifyPayment = useVerifyVideoConsultationPayment();
   const [confirmation, setConfirmation] = useState(null);
