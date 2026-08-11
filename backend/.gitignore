@@ -19,3 +19,4 @@ src/uploads/content/*
 !src/uploads/content/.gitkeep
 *.log
 .DS_Store
+rzp-test-key.csv
