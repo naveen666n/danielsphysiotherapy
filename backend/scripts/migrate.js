@@ -117,6 +117,19 @@ async function migrate() {
       console.log('Added service_id column to appointments.');
     }
 
+    const [existingVideoFeeColumn] = await connection.query(
+      `SELECT COLUMN_NAME FROM information_schema.COLUMNS
+       WHERE TABLE_SCHEMA = ? AND TABLE_NAME = 'doctors' AND COLUMN_NAME = 'video_consultation_fee'`,
+      [env.DB_NAME]
+    );
+    if (existingVideoFeeColumn.length === 0) {
+      await connection.query('ALTER TABLE doctors ADD COLUMN video_consultation_fee DECIMAL(10,2) AFTER consultation_fee');
+      await connection.query(
+        'ALTER TABLE doctors ADD COLUMN video_consultation_zoom_link VARCHAR(500) AFTER video_consultation_fee'
+      );
+      console.log('Added video_consultation_fee and video_consultation_zoom_link columns to doctors.');
+    }
+
     const [existingThemeColumn] = await connection.query(
       `SELECT COLUMN_NAME FROM information_schema.COLUMNS
        WHERE TABLE_SCHEMA = ? AND TABLE_NAME = 'hospital_settings' AND COLUMN_NAME = 'site_theme'`,

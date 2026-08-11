@@ -25,6 +25,8 @@ CREATE TABLE IF NOT EXISTS doctors (
   experience_years INT,
   photo_url VARCHAR(255),
   consultation_fee DECIMAL(10,2),
+  video_consultation_fee DECIMAL(10,2),
+  video_consultation_zoom_link VARCHAR(500),
   working_days VARCHAR(100),
   available_time VARCHAR(100),
   active BOOLEAN NOT NULL DEFAULT TRUE,
@@ -100,4 +102,38 @@ CREATE TABLE IF NOT EXISTS site_content (
   content_key VARCHAR(100) PRIMARY KEY,
   content_value TEXT NOT NULL,
   updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+);
+
+CREATE TABLE IF NOT EXISTS payments (
+  id INT AUTO_INCREMENT PRIMARY KEY,
+  payable_type VARCHAR(50) NOT NULL,
+  payable_id INT NOT NULL,
+  gateway VARCHAR(30) NOT NULL,
+  gateway_order_id VARCHAR(100),
+  gateway_payment_id VARCHAR(100),
+  amount DECIMAL(10,2) NOT NULL,
+  currency VARCHAR(10) NOT NULL DEFAULT 'INR',
+  status VARCHAR(20) NOT NULL DEFAULT 'created',
+  receipt VARCHAR(100),
+  created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+  updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  INDEX idx_payments_payable (payable_type, payable_id)
+);
+
+CREATE TABLE IF NOT EXISTS video_consultations (
+  id INT AUTO_INCREMENT PRIMARY KEY,
+  patient_name VARCHAR(100) NOT NULL,
+  mobile VARCHAR(20) NOT NULL,
+  email VARCHAR(150),
+  doctor_id INT NOT NULL,
+  consultation_date DATE NOT NULL,
+  consultation_time VARCHAR(20) NOT NULL,
+  problem_description TEXT,
+  payment_id INT,
+  status VARCHAR(20) NOT NULL DEFAULT 'pending_payment',
+  zoom_link VARCHAR(500),
+  created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+  updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  FOREIGN KEY (doctor_id) REFERENCES doctors(id),
+  FOREIGN KEY (payment_id) REFERENCES payments(id)
 );
