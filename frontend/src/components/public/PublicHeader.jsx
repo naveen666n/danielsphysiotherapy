@@ -83,6 +83,12 @@ export default function PublicHeader() {
             Hospital Login
           </Link>
           <Link
+            to="/video-consultation"
+            className="rounded-[var(--radius-button)] border border-brand-navy px-4 py-2.5 text-sm font-semibold text-brand-navy transition-colors hover:bg-brand-navy hover:text-white"
+          >
+            Video Consultation
+          </Link>
+          <Link
             to="/book"
             className="rounded-[var(--radius-button)] bg-brand-navy px-5 py-2.5 text-sm font-semibold text-white transition-colors hover:bg-[var(--color-brand-navy-hover)]"
           >
@@ -114,6 +120,13 @@ export default function PublicHeader() {
             className="mt-1 rounded-[var(--radius-button)] border border-brand-navy px-4 py-2 text-center text-sm font-semibold text-brand-navy"
           >
             Hospital Login
+          </Link>
+          <Link
+            to="/video-consultation"
+            onClick={() => setMenuOpen(false)}
+            className="mt-1 rounded-[var(--radius-button)] border border-brand-navy px-4 py-2 text-center text-sm font-semibold text-brand-navy"
+          >
+            Video Consultation
           </Link>
           <Link
             to="/book"
