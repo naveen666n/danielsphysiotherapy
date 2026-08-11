@@ -28,6 +28,8 @@ export default function DoctorForm() {
       specialization: '',
       experience_years: '',
       consultation_fee: '',
+      video_consultation_fee: '',
+      video_consultation_zoom_link: '',
       available_time: '',
       active: true,
     },
@@ -45,6 +47,8 @@ export default function DoctorForm() {
         specialization: doctor.specialization ?? '',
         experience_years: doctor.experience_years ?? '',
         consultation_fee: doctor.consultation_fee ?? '',
+        video_consultation_fee: doctor.video_consultation_fee ?? '',
+        video_consultation_zoom_link: doctor.video_consultation_zoom_link ?? '',
         available_time: doctor.available_time ?? '',
         active: Boolean(doctor.active),
       });
@@ -74,6 +78,8 @@ export default function DoctorForm() {
     if (values.specialization) formData.append('specialization', values.specialization);
     if (values.experience_years !== '') formData.append('experience_years', values.experience_years);
     if (values.consultation_fee !== '') formData.append('consultation_fee', values.consultation_fee);
+    if (values.video_consultation_fee !== '') formData.append('video_consultation_fee', values.video_consultation_fee);
+    if (values.video_consultation_zoom_link) formData.append('video_consultation_zoom_link', values.video_consultation_zoom_link);
     if (selectedDays.length > 0) formData.append('working_days', selectedDays.join(','));
     if (values.available_time) formData.append('available_time', values.available_time);
     formData.append('active', values.active ? 'true' : 'false');
@@ -149,6 +155,32 @@ export default function DoctorForm() {
               className="w-full rounded border border-slate-300 px-3 py-2 focus:border-blue-500 focus:outline-none"
               {...register('consultation_fee')}
             />
+          </div>
+        </div>
+
+        <div className="grid grid-cols-2 gap-4">
+          <div>
+            <label className="mb-1 block text-sm font-medium text-slate-700">Video Consultation Fee</label>
+            <input
+              type="number"
+              min="0"
+              step="0.01"
+              placeholder="Leave blank to disable video consultations"
+              className="w-full rounded border border-slate-300 px-3 py-2 focus:border-blue-500 focus:outline-none"
+              {...register('video_consultation_fee')}
+            />
+          </div>
+          <div>
+            <label className="mb-1 block text-sm font-medium text-slate-700">Zoom Link</label>
+            <input
+              type="url"
+              placeholder="https://zoom.us/j/..."
+              className="w-full rounded border border-slate-300 px-3 py-2 focus:border-blue-500 focus:outline-none"
+              {...register('video_consultation_zoom_link')}
+            />
+            {errors.video_consultation_zoom_link && (
+              <p className="mt-1 text-sm text-red-600">{errors.video_consultation_zoom_link.message}</p>
+            )}
           </div>
         </div>
 
