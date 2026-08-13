@@ -117,7 +117,7 @@ export default function Home() {
             </div>
           </div>
 
-          <div className="relative flex items-center justify-center lg:justify-end">
+          <div className="relative flex flex-col items-center gap-4 lg:flex-row lg:justify-end">
             <div className="relative aspect-4/5 w-full max-w-[360px] overflow-hidden rounded-[var(--radius-card)] border border-brand-line bg-brand-ice shadow-[var(--shadow-card)]">
               <img
                 src={content?.hero_image_url ? getPhotoUrl(content.hero_image_url) : fallbackDoctorPhoto}
@@ -135,7 +135,7 @@ export default function Home() {
               </div>
             </div>
 
-            <div className="absolute bottom-8 left-0 flex items-center gap-3 rounded-[var(--radius-card)] border border-brand-line bg-white px-4.5 py-3.5 shadow-[var(--shadow-card)] lg:left-[-40px]">
+            <div className="flex items-center gap-3 self-start rounded-[var(--radius-card)] border border-brand-line bg-white px-4.5 py-3.5 shadow-[var(--shadow-card)] lg:absolute lg:bottom-8 lg:left-[-40px] lg:self-auto">
               <div className="flex h-8.5 w-8.5 shrink-0 items-center justify-center rounded-full bg-brand-ice">
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" className="h-4 w-4 text-brand-sage">
                   <path d="M9 12l2 2 4-4" />
