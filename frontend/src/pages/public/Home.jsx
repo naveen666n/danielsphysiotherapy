@@ -118,7 +118,7 @@ export default function Home() {
           </div>
 
           <div className="relative flex flex-col items-center gap-4 lg:flex-row lg:justify-end">
-            <div className="relative aspect-4/5 w-full max-w-[360px] overflow-hidden rounded-[var(--radius-card)] border border-brand-line bg-brand-ice shadow-[var(--shadow-card)]">
+            <div className="relative aspect-square w-full max-w-[360px] overflow-hidden rounded-[var(--radius-card)] border border-brand-line bg-brand-ice shadow-[var(--shadow-card)]">
               <img
                 src={content?.hero_image_url ? getPhotoUrl(content.hero_image_url) : fallbackDoctorPhoto}
                 alt="Dr. Chenna Daniel"
@@ -127,12 +127,13 @@ export default function Home() {
               <svg className="absolute top-4.5 right-4.5 opacity-90" width="46" height="30" viewBox="0 0 46 30">
                 <path d="M3 28 A20 20 0 0 1 43 28" fill="none" stroke="rgba(255,255,255,0.7)" strokeWidth="1.4" />
               </svg>
-              <div className="absolute inset-x-0 bottom-0 bg-linear-to-t from-(--color-brand-navy)/90 to-(--color-brand-navy)/5 px-5.5 pt-5 pb-4.5">
+              {/* Overlay text disabled: the uploaded hero image already has the name/clinic banner baked in. */}
+              {/* <div className="absolute inset-x-0 bottom-0 bg-linear-to-t from-(--color-brand-navy)/90 to-(--color-brand-navy)/5 px-5.5 pt-5 pb-4.5">
                 <div className="font-display text-[22px] leading-[1.1] text-white italic">Dr. Chenna Daniel</div>
                 <div className="mt-1.5 font-mono-brand text-[10.5px] tracking-[0.1em] text-white/70 uppercase">
                   Founder &amp; Lead Physiotherapist
                 </div>
-              </div>
+              </div> */}
             </div>
 
             <div className="flex items-center gap-3 self-start rounded-[var(--radius-card)] border border-brand-line bg-white px-4.5 py-3.5 shadow-[var(--shadow-card)] lg:absolute lg:bottom-8 lg:left-[-40px] lg:self-auto">
