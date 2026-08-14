@@ -13,6 +13,12 @@ import { apiLimiter } from './middlewares/rateLimiters.js';
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const app = express();
 
+if (env.NODE_ENV === 'production') {
+  // Trust the first hop (nginx reverse proxy) so express-rate-limit can
+  // read the real client IP from X-Forwarded-For without trusting spoofed hops.
+  app.set('trust proxy', 1);
+}
+
 const allowedOrigins = env.FRONTEND_URL.split(',').map((url) => url.trim());
 const localDevOriginPattern = /^https?:\/\/(localhost|127\.0\.0\.1)(:\d+)?$/;
 
