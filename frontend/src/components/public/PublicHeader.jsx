@@ -148,7 +148,10 @@ export default function PublicHeader() {
           <span className="hidden h-px w-10 shrink-0 bg-white/30 sm:block" aria-hidden="true" />
         </div>
         {content?.footer_tagline && (
-          <p className="mt-1 text-[11px] font-semibold tracking-[0.2em] text-brand-sage uppercase sm:text-xs">
+          <p
+            className="mt-1 text-[11px] font-semibold tracking-[0.2em] uppercase sm:text-xs"
+            style={{ color: '#fff95d' }}
+          >
             {content.footer_tagline}
           </p>
         )}
