@@ -77,7 +77,7 @@ CREATE TABLE IF NOT EXISTS hospital_settings (
   id INT PRIMARY KEY DEFAULT 1,
   hospital_name VARCHAR(150),
   address VARCHAR(255),
-  phone VARCHAR(20),
+  phone VARCHAR(35),
   email VARCHAR(150),
   google_map_link VARCHAR(500),
   map_embed_url VARCHAR(1000),
