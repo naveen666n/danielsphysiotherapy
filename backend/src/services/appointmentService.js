@@ -1,5 +1,6 @@
 import AppError from '../utils/AppError.js';
 import * as appointmentRepository from '../repositories/appointmentRepository.js';
+import { sendAppointmentEmails } from './notificationService.js';
 
 function referencedRowError(err) {
   const detail = err.sqlMessage || err.message || '';
@@ -46,7 +47,11 @@ export async function createPublicAppointment(data) {
     }
     throw err;
   }
-  return getAppointment(id);
+  const created = await getAppointment(id);
+  sendAppointmentEmails(created).catch((err) => {
+    console.error(`Failed to send appointment notification emails for appointment ${id}:`, err.message);
+  });
+  return created;
 }
 
 export async function updateAppointment(id, data) {

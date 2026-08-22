@@ -2,6 +2,7 @@ import AppError from '../utils/AppError.js';
 import * as videoConsultationRepository from '../repositories/videoConsultationRepository.js';
 import * as doctorRepository from '../repositories/doctorRepository.js';
 import * as paymentService from '../payments/paymentService.js';
+import { sendVideoConsultationEmails } from './notificationService.js';
 
 function toCreateRow(data) {
   return {
@@ -84,7 +85,11 @@ export async function verifyPayment(id, { gatewayOrderId, gatewayPaymentId, sign
     zoom_link: doctor.video_consultation_zoom_link,
   });
 
-  return getConsultation(id);
+  const paidConsultation = await getConsultation(id);
+  sendVideoConsultationEmails(paidConsultation, doctor).catch((err) => {
+    console.error(`Failed to send video consultation notification emails for consultation ${id}:`, err.message);
+  });
+  return paidConsultation;
 }
 
 export async function updateConsultation(id, data) {

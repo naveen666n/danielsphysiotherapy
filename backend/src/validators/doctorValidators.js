@@ -9,6 +9,7 @@ const booleanFromString = z.preprocess((val) => {
 
 export const doctorSchema = z.object({
   name: z.string().min(2, 'Name must be at least 2 characters'),
+  email: z.string().email('Enter a valid email').optional(),
   qualification: z.string().optional(),
   specialization: z.string().optional(),
   experience_years: z.coerce.number().int().min(0).optional(),

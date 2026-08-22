@@ -20,6 +20,7 @@ CREATE TABLE IF NOT EXISTS users (
 CREATE TABLE IF NOT EXISTS doctors (
   id INT AUTO_INCREMENT PRIMARY KEY,
   name VARCHAR(100) NOT NULL,
+  email VARCHAR(150),
   qualification VARCHAR(150),
   specialization VARCHAR(150),
   experience_years INT,

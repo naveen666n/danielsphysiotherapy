@@ -26,6 +26,7 @@ async function deletePhotoFile(photoUrl) {
 function toRow(data, photoUrl) {
   return {
     name: data.name,
+    email: data.email ?? null,
     qualification: data.qualification ?? null,
     specialization: data.specialization ?? null,
     experience_years: data.experience_years ?? null,
@@ -45,7 +46,7 @@ export async function listDoctors() {
 
 export async function listPublicDoctors() {
   const doctors = await doctorRepository.findActiveOnly();
-  return doctors.map(({ video_consultation_zoom_link, ...rest }) => ({
+  return doctors.map(({ video_consultation_zoom_link, email, ...rest }) => ({
     ...rest,
     offers_video_consultation: Boolean(video_consultation_zoom_link && rest.video_consultation_fee),
   }));

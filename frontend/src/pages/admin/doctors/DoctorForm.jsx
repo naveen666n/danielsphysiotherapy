@@ -24,6 +24,7 @@ export default function DoctorForm() {
   } = useForm({
     defaultValues: {
       name: '',
+      email: '',
       qualification: '',
       specialization: '',
       experience_years: '',
@@ -43,6 +44,7 @@ export default function DoctorForm() {
     if (doctor) {
       reset({
         name: doctor.name ?? '',
+        email: doctor.email ?? '',
         qualification: doctor.qualification ?? '',
         specialization: doctor.specialization ?? '',
         experience_years: doctor.experience_years ?? '',
@@ -74,6 +76,7 @@ export default function DoctorForm() {
   async function onSubmit(values) {
     const formData = new FormData();
     formData.append('name', values.name);
+    if (values.email) formData.append('email', values.email);
     if (values.qualification) formData.append('qualification', values.qualification);
     if (values.specialization) formData.append('specialization', values.specialization);
     if (values.experience_years !== '') formData.append('experience_years', values.experience_years);
@@ -115,6 +118,20 @@ export default function DoctorForm() {
             {...register('name', { required: 'Name is required' })}
           />
           {errors.name && <p className="mt-1 text-sm text-red-600">{errors.name.message}</p>}
+        </div>
+
+        <div>
+          <label className="mb-1 block text-sm font-medium text-slate-700">Email</label>
+          <input
+            type="email"
+            placeholder="doctor@example.com"
+            className="w-full rounded border border-slate-300 px-3 py-2 focus:border-blue-500 focus:outline-none"
+            {...register('email', {
+              pattern: { value: /^[^\s@]+@[^\s@]+\.[^\s@]+$/, message: 'Enter a valid email address' },
+            })}
+          />
+          <p className="mt-1 text-xs text-slate-500">Used to send this doctor appointment notification emails.</p>
+          {errors.email && <p className="mt-1 text-sm text-red-600">{errors.email.message}</p>}
         </div>
 
         <div className="grid grid-cols-2 gap-4">

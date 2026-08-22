@@ -142,6 +142,16 @@ async function migrate() {
       console.log('Added site_theme column to hospital_settings.');
     }
 
+    const [existingDoctorEmailColumn] = await connection.query(
+      `SELECT COLUMN_NAME FROM information_schema.COLUMNS
+       WHERE TABLE_SCHEMA = ? AND TABLE_NAME = 'doctors' AND COLUMN_NAME = 'email'`,
+      [env.DB_NAME]
+    );
+    if (existingDoctorEmailColumn.length === 0) {
+      await connection.query('ALTER TABLE doctors ADD COLUMN email VARCHAR(150) AFTER name');
+      console.log('Added email column to doctors.');
+    }
+
     const [existingMapEmbedColumn] = await connection.query(
       `SELECT COLUMN_NAME FROM information_schema.COLUMNS
        WHERE TABLE_SCHEMA = ? AND TABLE_NAME = 'hospital_settings' AND COLUMN_NAME = 'map_embed_url'`,
